@@ -1,0 +1,13 @@
+! MLAG Configuration
+mlag configuration
+   domain-id {{ mlag.domain_id }}
+   peer-address {{ mlag.peer_ip }}
+   peer-link {{ mlag.peer_link }}
+   backup-address {{ mlag.keepalive_ip }}
+
+! Peer Link Interface
+interface {{ mlag.peer_link }}
+   description "MLAG_PEER_LINK"
+   no shutdown
+   no routing
+   vlan trunk allowed all

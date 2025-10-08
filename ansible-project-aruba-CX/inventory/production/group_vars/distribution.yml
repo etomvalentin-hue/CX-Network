@@ -1,0 +1,30 @@
+---
+# Configuration commune à tous les switches de distribution
+ansible_connection: ansible.netcommon.httpapi
+ansible_network_os: arubanetworks.aos_switch.arubaoss
+ansible_user: "{{ vault_ansible_user }}"
+ansible_password: "{{ vault_ansible_password }}"
+ansible_become: yes
+
+# Paramètres communs
+role: "distribution"
+mgmt_vlan: 10
+
+# VLANs communs
+common_vlans:
+  - id: 100
+    name: "USER"
+  - id: 110
+    name: "VOICE"
+  - id: 200
+    name: "SERVER"
+
+# Configuration OSPF commune
+ospf:
+  process_id: 1
+  area: "0.0.0.0"
+
+# Standards de sécurité
+security:
+  spanning_tree_mode: "rstp"
+  bpdu_guard: true

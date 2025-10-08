@@ -1,0 +1,7 @@
+! OSPF Configuration
+router ospf {{ ospf.process_id }}
+   router-id {{ ospf.router_id }}
+   redistribute connected
+{% for network in ospf.networks %}
+   network {{ network }} area {{ ospf.area }}
+{% endfor %}

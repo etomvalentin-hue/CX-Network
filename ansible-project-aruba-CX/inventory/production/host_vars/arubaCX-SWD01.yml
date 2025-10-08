@@ -1,0 +1,56 @@
+---
+hostname: arubaCX-SWD01
+role: distribution
+ansible_host: 192.168.1.10 
+
+# Configuration MLAG spécifique
+mlag:
+  domain_id: 10
+  peer_ip: "192.168.100.11"  # IP de core-switch-02
+  local_ip: "192.168.100.10"
+  peer_link: "1/1/49-1/1/50"
+  keepalive_ip: "1.1.255.1"
+
+
+# VLANs avec IP spécifiques
+vlans:
+  - id: 10
+    name: "MGMT"
+    ip_address: "192.168.2.10/24"
+  - id: 100
+    name: "USER"
+  - id: 110
+    name: "VOICE"
+  - id: 200
+    name: "SERVER"
+    ip_address: "10.11.2.1/24"
+
+# Interfaces spécifiques
+wan_uplinks:
+  - interface: "1/1/47"
+    peer_device: "wan-router-01"
+    description: "WAN_UPLINK_TO_ROUTER_01"
+    ip_address: "192.168.10.1/30"
+    ospf_area: "0.0.0.0"
+
+access_downlinks:
+  - interface: "1/1/1"
+    peer_device: "access-arubaCX-SWA1"
+    description: "ACCESS_TO_arubaCX-SWA1"
+    allowed_vlans: "10,100,110,200"
+    native_vlan: 1
+  - interface: "1/1/2"
+    peer_device: "access-arubaCX-SWA2"
+    description: "ACCESS_TO_arubaCX-SWA2"
+    allowed_vlans: "10,100,110,200"
+    native_vlan: 1
+
+# OSPF spécifique
+ospf:
+  router_id: "192.168.10.1"
+  networks:
+    - "192.168.2.0/24"
+    - "10.11.0.0/24"
+    - "10.11.1.0/24"
+    - "10.11.2.0/24"
+    - "10.10.1.0/30"    ------> ira dans bgp
