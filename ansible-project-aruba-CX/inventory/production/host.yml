@@ -1,0 +1,11 @@
+all:
+  children:
+    WAN:
+      arubaCX-Rt1:
+        ansible_host: 192.168.116.136
+    DISTRIBUTION:
+      arubaCX-SWD1:
+      aruabaCX-SWD2:
+    ACCESS:
+      arubaCX-SWA1:
+      aruabaCX-SWA2:
