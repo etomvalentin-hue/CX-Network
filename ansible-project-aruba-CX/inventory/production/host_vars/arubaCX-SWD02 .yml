@@ -1,5 +1,5 @@
 ---
-role: DISTRIBUTION
+role: distribution
 mlag: arubaCX-SWD1
 uplinks:
   1:

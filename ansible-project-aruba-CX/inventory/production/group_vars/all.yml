@@ -1,0 +1,8 @@
+---
+
+# Configuration système commune
+system:
+  timezone: "Europe/Paris"
+  ntp_servers:
+    - "192.168.1.254"
+  domain_name: "entreprise.local"

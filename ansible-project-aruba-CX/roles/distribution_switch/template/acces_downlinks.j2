@@ -1,0 +1,11 @@
+! Access Downlinks - L2 Trunk
+{% for downlink in access_downlinks %}
+interface {{ downlink.interface }}
+   description "{{ downlink.description }}"
+   no shutdown
+   no routing
+   vlan trunk allowed {{ downlink.allowed_vlans }}
+   vlan trunk native {{ downlink.native_vlan }}
+   spanning-tree {{ downlink.interface }} admin-edge-port
+   spanning-tree {{ downlink.interface }} bpdu-guard
+{% endfor %}

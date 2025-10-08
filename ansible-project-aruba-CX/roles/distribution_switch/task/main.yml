@@ -1,0 +1,54 @@
+---
+- name: Generate and push base system configuration
+  template:
+    src: "base_system.j2"
+    dest: "/tmp/{{ inventory_hostname }}_base.cfg"
+  register: base_config
+
+- name: Generate and push VLAN configuration
+  template:
+    src: "vlans.j2"
+    dest: "/tmp/{{ inventory_hostname }}_vlans.cfg"
+  register: vlan_config
+
+- name: Generate and push MLAG configuration
+  template:
+    src: "mlag.j2"
+    dest: "/tmp/{{ inventory_hostname }}_mlag.cfg"
+  register: mlag_config
+
+- name: Generate and push WAN uplinks configuration
+  template:
+    src: "wan_uplinks.j2"
+    dest: "/tmp/{{ inventory_hostname }}_wan.cfg"
+  register: wan_config
+
+- name: Generate and push access downlinks configuration
+  template:
+    src: "access_downlinks.j2"
+    dest: "/tmp/{{ inventory_hostname }}_access.cfg"
+  register: access_config
+
+- name: Generate and push OSPF configuration
+  template:
+    src: "ospf.j2"
+    dest: "/tmp/{{ inventory_hostname }}_ospf.cfg"
+  register: ospf_config
+
+- name: Push all configurations to switch
+  arubaoss_config:
+    src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
+  loop:
+    - base
+    - vlans
+    - mlag
+    - wan
+    - access
+    - ospf
+  when: 
+    - base_config.changed or 
+      vlan_config.changed or 
+      mlag_config.changed or 
+      wan_config.changed or 
+      access_config.changed or 
+      ospf_config.changed
