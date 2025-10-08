@@ -1,0 +1,6 @@
+---
+- name: Deploy Distribution Switch Configuration using Templates
+  hosts: distribution
+  gather_facts: false
+  roles:
+    - distribution_switch

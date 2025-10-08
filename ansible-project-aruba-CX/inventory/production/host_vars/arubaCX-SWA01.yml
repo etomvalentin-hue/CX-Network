@@ -1,0 +1,63 @@
+---
+# Données UNIQUES à ce switch
+hostname: "arubaCX-SWA01"
+mgmt_ip: "192.168.2.20"
+ansible_host: 192.168.1.10 
+location: "BATIMENT_A_ETAGE_1"
+model: "CX-6300"
+
+# VLANs spécifiques (hérite des default_vlans + spécifiques)
+vlans:
+  - id: 10
+    name: "MGMTS"
+    ip_address: "192.168.2.20/24"
+  - id: 100
+    name: "USER_DATA"
+  - id: 110
+    name: "USER_VOICE"
+  - id: 150
+    name: "IOT_DEVICES"
+
+# Uplinks vers distribution (L2 Trunk)
+uplinks:
+  - interface: "1/1/47"
+    peer_device: "core-switch-01"
+    description: "UPLINK_TO_CORE_01"
+    type: "trunk"
+    allowed_vlans: "10,100,110,150"
+    native_vlan: 1
+    lacp: false  # Pas de LACP sur un seul lien
+
+  - interface: "1/1/48"
+    peer_device: "core-switch-02" 
+    description: "UPLINK_TO_CORE_02"
+    type: "trunk"
+    allowed_vlans: "10,100,110,150"
+    native_vlan: 1
+    lacp: false
+
+# Ports d'accès utilisateurs
+access_ports:
+  - range: "1/1/1-1/1/24"
+    description: "USER_PORTS"
+    type: "access"
+    vlan: 100
+    voice_vlan: 110
+    nac_profile: "DEFAULT_USER"
+    bpdu_guard: true
+    portfast: true
+
+# Ports pour équipements fixes
+static_ports:
+  - interface: "1/1/25"
+    description: "PRINTER_FLOOR_1"
+    type: "access"
+    vlan: 150
+    nac_profile: "STATIC_DEVICE"
+    bpdu_guard: true
+
+  - interface: "1/1/26"
+    description: "CAMERA_CORRIDOR_1"
+    type: "access"
+    vlan: 150
+    nac_profile: "STATIC_DEVICE"

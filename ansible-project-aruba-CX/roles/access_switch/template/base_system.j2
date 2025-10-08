@@ -1,0 +1,15 @@
+! Configuration de base pour {{ hostname }}
+hostname {{ hostname }}
+clock timezone {{ system.timezone }}
+ip domain-name {{ system.domain_name }}
+
+! NTP Configuration
+{% for ntp in system.ntp_servers %}
+ntp server {{ ntp }}
+{% endfor %}
+
+! Management Interface
+interface vlan {{ mgmt_vlan }}
+   description "MGMT_VLAN"
+   ip address {{ mgmt_ip }}/{{ mgmt_subnet }}
+   no shutdown
