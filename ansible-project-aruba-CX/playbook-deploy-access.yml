@@ -1,0 +1,6 @@
+---
+- name: Deploy Access Switch Configuration
+  hosts: access
+  gather_facts: false
+  roles:
+    - access_switch

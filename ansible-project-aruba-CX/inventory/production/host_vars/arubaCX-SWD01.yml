@@ -15,7 +15,7 @@ mlag:
 # VLANs avec IP spécifiques
 vlans:
   - id: 10
-    name: "MGMT"
+    name: "MGMTS"
     ip_address: "192.168.2.10/24"
   - id: 100
     name: "USER"

@@ -1,0 +1,38 @@
+---
+# Configuration commune à tous les switches d'accès
+ansible_connection: ansible.netcommon.httpapi
+ansible_network_os: arubanetworks.aos_switch.arubaoss
+ansible_user: "{{ vault_ansible_user }}"
+ansible_password: "{{ vault_ansible_password }}"
+ansible_become: yes
+
+# Paramètres communs
+role: "access"
+mgmt_vlan: 10
+
+# VLANs par défaut pour l'accès
+default_vlans:
+  - id: 10
+    name: "MGMT"
+  - id: 100
+    name: "USER_DATA"
+  - id: 110
+    name: "USER_VOICE"
+  - id: 150
+    name: "IOT_DEVICES"
+
+# Standards de sécurité pour ports d'accès
+port_security:
+  bpdu_guard: true
+  portfast: true
+  storm_control: true
+
+# Configuration NAC/802.1X (si applicable)
+nac:
+  enabled: true
+  default_profile: "DEFAULT_USER"
+
+# Configuration spanning-tree
+spanning_tree:
+  mode: "rstp"
+  priority: 32768

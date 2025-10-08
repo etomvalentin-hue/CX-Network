@@ -1,0 +1,25 @@
+Protocol 
+OSPF ----> Agg + Acces
+BGP ----> Agg + Core
+
+Cluster :
+	Aggregation  : Deux switch en cluster
+
+Adressage Data
+	CORE+Aggr 10.10.0.0/16  : 10.10.0.0/30 - 10.10.0.4/30 - 10.10.0.8/30
+	Aggr+Acces 10.11.0.0/16 : 10.11.0.0/30 - 10.11.0.4/30 - 10.11.0.8/30
+
+
+
+Interconnection
+	interco  CORE + Aggre (Cluster) :  P01    ( on va creer des sous interface Po)
+	
+	intero Acces + Aggre :
+		Switch acces 1 (Po1) + Aggre (cluster) PO2 ( on va creer des sous interface Po)
+		Swtitch Acces2 : Po1 + Aggre (cluster) PO3 ( on va creer des sous interface Po)
+	
+Compte :
+	admin
+	admin2023
+	
+ansible-playbook playbooks/deploy-access.yml --limit access-switch-01
