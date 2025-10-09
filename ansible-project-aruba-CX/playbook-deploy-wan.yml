@@ -2,5 +2,7 @@
 - name: Deploy WAN Router Configuration
   hosts: wan
   gather_facts: false
+  collections:
+    - arubanetworks.aos_switch
   roles:
     - wan_router
