@@ -1,6 +1,6 @@
 ---
 - name: Deploy WAN Router Configuration
-  hosts: WAN
+  hosts: wan
   gather_facts: false
   roles:
     - wan_router
