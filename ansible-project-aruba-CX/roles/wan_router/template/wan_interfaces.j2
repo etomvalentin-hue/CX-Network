@@ -1,0 +1,13 @@
+! WAN Interfaces vers ISPs
+{% for wan in wan_interfaces %}
+interface {{ wan.interface }}
+   description "{{ wan.description }}"
+   no shutdown
+   routing
+   ip address {{ wan.ip_address }}
+   
+   ! BGP Configuration
+   {% if wan.bgp is defined %}
+   ! BGP neighbor: {{ wan.bgp.neighbor }} (AS{{ wan.bgp.remote_as }})
+   {% endif %}
+{% endfor %}

@@ -1,0 +1,9 @@
+! OSPF Configuration for LAN
+router ospf {{ ospf.process_id }}
+   router-id {{ ospf.router_id }}
+   {% for network in ospf.networks %}
+   network {{ network }} area 0.0.0.0
+   {% endfor %}
+   {% for interface in ospf.passive_interfaces %}
+   passive-interface {{ interface }}
+   {% endfor %}

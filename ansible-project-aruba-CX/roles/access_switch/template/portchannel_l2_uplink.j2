@@ -1,0 +1,31 @@
+! L2 PortChannel vers Distribution VSX
+{% for po in portchannels %}
+interface {{ po.id }}
+   description "{{ po.description }}"
+   no shutdown
+   no routing
+   vlan trunk allowed {{ po.vlans.allowed }}
+   vlan trunk native {{ po.vlans.native | default(1) }}
+
+! Member Interfaces
+{% for member in po.members %}
+interface {{ member.interface }}
+   description "{{ member.description }}"
+   no shutdown
+   no routing
+   port-channel {{ po.id }} mode {{ po.mode }}
+
+! Désactiver le spanning-tree sur les membres (géré sur le PortChannel)
+spanning-tree {{ member.interface }} admin-point-to-point
+{% endfor %}
+
+! LACP Configuration
+{% if po.protocol == "lacp" %}
+interface {{ po.id }}
+   lacp mode active
+{% endif %}
+
+! Spanning-tree sur le PortChannel
+spanning-tree {{ po.id }} admin-edge-port
+spanning-tree {{ po.id }} bpdu-guard
+{% endfor %}

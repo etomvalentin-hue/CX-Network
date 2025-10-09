@@ -1,0 +1,47 @@
+---
+- name: Generate and push base system configuration
+  template:
+    src: "base_system.j2"
+    dest: "/tmp/{{ inventory_hostname }}_base.cfg"
+
+- name: Generate and push VSX configuration
+  template:
+    src: "vsx.j2"
+    dest: "/tmp/{{ inventory_hostname }}_vsx.cfg"
+
+- name: Generate and push VLAN configuration
+  template:
+    src: "vlans.j2"
+    dest: "/tmp/{{ inventory_hostname }}_vlans.cfg"
+
+- name: Generate and push BGP WAN PortChannel
+  template:
+    src: "portchannel_bgp_wan.j2"
+    dest: "/tmp/{{ inventory_hostname }}_wan_po.cfg"
+
+- name: Generate and push L2 Access PortChannels
+  template:
+    src: "portchannel_l2_access.j2"
+    dest: "/tmp/{{ inventory_hostname }}_access_po.cfg"
+
+- name: Generate and push BGP configuration
+  template:
+    src: "bgp.j2"
+    dest: "/tmp/{{ inventory_hostname }}_bgp.cfg"
+
+- name: Generate and push OSPF configuration
+  template:
+    src: "ospf.j2"
+    dest: "/tmp/{{ inventory_hostname }}_ospf.cfg"
+
+- name: Push all configurations to distribution switch
+  arubaoss_config:
+    src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
+  loop:
+    - base
+    - vsx
+    - vlans
+    - wan_po
+    - access_po
+    - bgp
+    - ospf

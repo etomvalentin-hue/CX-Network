@@ -1,0 +1,28 @@
+---
+# Configuration commune WAN
+ansible_connection: ansible.netcommon.httpapi
+ansible_network_os: arubanetworks.aos_switch.arubaoss
+ansible_user: "{{ vault_ansible_user }}"
+ansible_password: "{{ vault_ansible_password }}"
+ansible_become: yes
+
+role: "wan"
+mgmt_vlan: 10
+
+# BGP Configuration de base
+bgp:
+  as_number: 65001
+  router_id: "{{ mgmt_ip }}"
+  log_neighbor_changes: true
+
+# Policies de routage
+route_maps:
+  - name: "TO_ISP"
+    sequences:
+      - sequence: 10
+        action: "permit"
+
+# Sécurité
+security:
+  ip_ssh: true
+  ip_https: true

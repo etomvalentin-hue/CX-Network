@@ -1,0 +1,35 @@
+---
+- name: Generate and push base system configuration
+  template:
+    src: "base_system.j2"
+    dest: "/tmp/{{ inventory_hostname }}_base.cfg"
+
+- name: Generate and push VLAN configuration
+  template:
+    src: "vlans.j2"
+    dest: "/tmp/{{ inventory_hostname }}_vlans.cfg"
+
+- name: Generate and push PortChannel to Distribution
+  template:
+    src: "portchannel_bgp_distribution.j2"
+    dest: "/tmp/{{ inventory_hostname }}_distribution.cfg"
+
+- name: Generate and push WAN interfaces configuration
+  template:
+    src: "wan_interfaces.j2"
+    dest: "/tmp/{{ inventory_hostname }}_wan.cfg"
+
+- name: Generate and push BGP configuration
+  template:
+    src: "bgp.j2"
+    dest: "/tmp/{{ inventory_hostname }}_bgp.cfg"
+
+- name: Push all configurations to WAN router
+  arubaoss_config:
+    src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
+  loop:
+    - base
+    - vlans
+    - distribution
+    - wan
+    - bgp

@@ -3,52 +3,39 @@
   template:
     src: "base_system.j2"
     dest: "/tmp/{{ inventory_hostname }}_base.cfg"
-  register: base_config
 
 - name: Generate and push VLAN configuration
   template:
     src: "vlans.j2"
     dest: "/tmp/{{ inventory_hostname }}_vlans.cfg"
-  register: vlan_config
 
-- name: Generate and push MLAG configuration
+- name: Generate and push L2 Uplink PortChannel
   template:
-    src: "mlag.j2"
-    dest: "/tmp/{{ inventory_hostname }}_mlag.cfg"
-  register: mlag_config
+    src: "portchannel_l2_uplink.j2"
+    dest: "/tmp/{{ inventory_hostname }}_uplink.cfg"
 
-- name: Generate and push WAN uplinks configuration
+- name: Generate and push access ports configuration
   template:
-    src: "wan_uplinks.j2"
-    dest: "/tmp/{{ inventory_hostname }}_wan.cfg"
-  register: wan_config
+    src: "access_ports.j2"
+    dest: "/tmp/{{ inventory_hostname }}_access_ports.cfg"
 
-- name: Generate and push access downlinks configuration
+- name: Generate and push static ports configuration
   template:
-    src: "access_downlinks.j2"
-    dest: "/tmp/{{ inventory_hostname }}_access.cfg"
-  register: access_config
+    src: "static_ports.j2"
+    dest: "/tmp/{{ inventory_hostname }}_static_ports.cfg"
 
-- name: Generate and push OSPF configuration
+- name: Generate and push security configuration
   template:
-    src: "ospf.j2"
-    dest: "/tmp/{{ inventory_hostname }}_ospf.cfg"
-  register: ospf_config
+    src: "security.j2"
+    dest: "/tmp/{{ inventory_hostname }}_security.cfg"
 
-- name: Push all configurations to switch
+- name: Push all configurations to access switch
   arubaoss_config:
     src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
   loop:
     - base
     - vlans
-    - mlag
-    - wan
-    - access
-    - ospf
-  when: 
-    - base_config.changed or 
-      vlan_config.changed or 
-      mlag_config.changed or 
-      wan_config.changed or 
-      access_config.changed or 
-      ospf_config.changed
+    - uplink
+    - access_ports
+    - static_ports
+    - security

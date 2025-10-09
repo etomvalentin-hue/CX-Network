@@ -1,56 +1,100 @@
 ---
+# Configuration de base
 hostname: arubaCX-SWD01
 role: distribution
+vsx_role: "primary"
 ansible_host: 192.168.1.10 
 
-# Configuration MLAG spécifique
-mlag:
-  domain_id: 10
-  peer_ip: "192.168.100.11"  # IP de core-switch-02
-  local_ip: "192.168.100.10"
-  peer_link: "1/1/49-1/1/50"
-  keepalive_ip: "1.1.255.1"
+
+# Configuration VSX
+vsx:
+  system_mac: "00:01:02:03:04:05"
+  isl:
+    interface: "1/1/4-1/1/5"
+    description: "VSX_ISL"
+  keepalive:
+    interface: "1/1/6"
+    ip: "192.168.255.1"
+    peer_ip: "192.168.255.2"
 
 
-# VLANs avec IP spécifiques
+# PortChannel vers Routeur WAN (BGP)
+portchannels:
+  - id: 100
+    description: "PORTCHANNEL_TO_WAN_ROUTER"
+    type: "routed"
+    ip_address: "10.10.0.1/30"  # IP virtuelle VSX
+    protocol: "lacp"
+    mode: "active"
+    members:
+      - interface: "1/1/1"
+        description: "PO100_MEMBER_TO_WAN"
+
+# PortChannels vers switches d'accès (OSPF)
+portchannels:
+  - id: 10
+    description: "PORTCHANNEL_TO_ACCESS_SW_01"
+    type: "switched"
+    protocol: "lacp"
+    mode: "active"
+    members:
+      - interface: "1/1/3"
+        description: "PO200_MEMBER_TO_ACC_01"
+    vlans:
+      allowed: "10,100,200"
+      native: 1
+
+  - id: 20
+    description: "PORTCHANNEL_TO_ACCESS_SW_02"
+    type: "switched"
+    protocol: "lacp"
+    mode: "active"
+    members:
+      - interface: "1/1/4"
+        description: "PO201_MEMBER_TO_ACC_02"
+    vlans:
+      allowed: "10,100,200"
+      native: 1
+
+
+# VLANs (OSPF)
 vlans:
   - id: 10
-    name: "MGMTS"
-    ip_address: "192.168.2.10/24"
+    name: "MGMT"
+    ip_address: "192.168.10.10/24"
+    opsf_area: "0.0.0.0"
   - id: 100
     name: "USER"
-  - id: 110
-    name: "VOICE"
+    ip_address: "10.10.100.1/24"
+    opsf_area: "0.0.0.0"
   - id: 200
     name: "SERVER"
-    ip_address: "10.11.2.1/24"
+    ip_address: "10.10.200.1/24"
+    opsf_area: "0.0.0.0"
 
-# Interfaces spécifiques
-wan_uplinks:
-  - interface: "1/1/47"
-    peer_device: "wan-router-01"
-    description: "WAN_UPLINK_TO_ROUTER_01"
-    ip_address: "192.168.10.1/30"
-    ospf_area: "0.0.0.0"
-
-access_downlinks:
-  - interface: "1/1/1"
-    peer_device: "access-arubaCX-SWA1"
-    description: "ACCESS_TO_arubaCX-SWA1"
-    allowed_vlans: "10,100,110,200"
-    native_vlan: 1
-  - interface: "1/1/2"
-    peer_device: "access-arubaCX-SWA2"
-    description: "ACCESS_TO_arubaCX-SWA2"
-    allowed_vlans: "10,100,110,200"
-    native_vlan: 1
-
-# OSPF spécifique
-ospf:
-  router_id: "192.168.10.1"
+# Configuration BGP vers WAN
+bgp:
+  as_number: 65000
+  router_id: "192.168.10.10"  # Router ID virtuel VSX
   networks:
-    - "192.168.2.0/24"
-    - "10.11.0.0/24"
-    - "10.11.1.0/24"
-    - "10.11.2.0/24"
-    - "10.10.1.0/30"    ------> ira dans bgp
+    - "10.10.0.0/30"
+  neighbors:
+    - ip: "192.168.10.2"
+      remote_as: 65001
+      description: "WAN_ROUTER"
+
+# Configuration OSPF pour LAN
+ospf:
+  process_id: 1
+  router_id: "192.168.10.10"
+  passive_interfaces:
+    - "vlan10"
+    - "vlan100"
+    - "vlan200"
+  networks:
+    - "192.168.10.0/24"
+    - "10.10.100.0/24"
+    - "10.10.200.0/30"
+  redistribute:
+    - bgp
+    - connected

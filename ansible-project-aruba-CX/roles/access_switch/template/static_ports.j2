@@ -1,0 +1,22 @@
+! Configuration de sécurité pour switches d'accès
+spanning-tree mode {{ spanning_tree.mode | default('rstp') }}
+{% if spanning_tree.priority is defined %}
+spanning-tree priority {{ spanning_tree.priority }}
+{% endif %}
+
+! Storm Control global
+{% if port_security.storm_control | default(true) %}
+storm-control broadcast
+storm-control multicast  
+storm-control unknown-unicast
+{% endif %}
+
+! DHCP Snooping (optionnel)
+{% if security.dhcp_snooping | default(false) %}
+dhcp-snooping
+{% endif %}
+
+! MAC Security (optionnel)
+{% if security.mac_security | default(false) %}
+mac-security
+{% endif %}

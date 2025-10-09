@@ -1,10 +1,7 @@
-! VLAN Configuration
+! VLAN Configuration (L2 seulement)
 {% for vlan in vlans %}
 vlan {{ vlan.id }}
    name "{{ vlan.name }}"
-{% if vlan.ip_address is defined %}
-interface vlan {{ vlan.id }}
-   ip address {{ vlan.ip_address }}
-   no shutdown
-{% endif %}
 {% endfor %}
+
+! Note: Pas d'interface VLAN (sauf mgmt) sur les switches d'accès
