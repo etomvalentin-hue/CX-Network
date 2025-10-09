@@ -1,0 +1,4 @@
+---
+collections:
+  - name: arubanetworks.aos_switch
+    version: 2.0.0
