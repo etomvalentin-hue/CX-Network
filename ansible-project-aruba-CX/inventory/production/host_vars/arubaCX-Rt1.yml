@@ -1,0 +1,63 @@
+---
+hostname: "WAN-ROUTER-01"
+ansible_host: "192.168.116.136"
+role: wan
+
+vlans:
+  - id: 10
+    name: "MGMT"
+    ip_address: "192.168.10.1/24"
+
+
+
+# PortChannel vers VSX Distribution (BGP)
+portchannels:
+  - id: 100
+    description: "PORTCHANNEL_TO_VSX_CLUSTER_BGP"
+    type: "routed"
+    ip_address: "10.10.0.2/30"
+    protocol: "lacp"
+    mode: "active"
+    members:
+      - interface: "1/1/1"
+        description: "PO100_MEMBER_TO_CORE_01"
+      - interface: "1/1/2"
+        description: "PO100_MEMBER_TO_CORE_02"
+
+# Interfaces WAN (BGP vers ISPs)
+wan_interfaces:
+  - interface: "1/1/3"
+    description: "LINK_TO_ISP_A"
+    type: "routed"
+    ip_address: "203.0.113.10/30"
+    bgp:
+      neighbor: "203.0.113.9"
+      remote_as: 64500
+
+  - interface: "1/1/4"
+    description: "LINK_TO_ISP_B"
+    type: "routed"
+    ip_address: "198.51.100.10/30"
+    bgp:
+      neighbor: "198.51.100.9"
+      remote_as: 64501
+
+# Configuration BGP (WAN seulement)
+bgp:
+  as_number: 65001
+  router_id: "192.168.10.1"
+  networks:
+    - "192.168.1.0/24"
+    - "192.168.10.0/30"
+  neighbors:
+    # Vers VSX Cluster
+    - ip: "192.168.10.1"
+      remote_as: 65000
+      description: "VSX_CLUSTER"
+    # Vers ISPs
+    - ip: "203.0.113.9"
+      remote_as: 64500
+      description: "ISP_A"
+    - ip: "198.51.100.9"
+      remote_as: 64501
+      description: "ISP_B"

@@ -1,0 +1,28 @@
+! VSX Configuration
+vsx
+   system-mac {{ vsx.system_mac }}
+   inter-switch-link {{ vsx.isl.interface }}
+   {% if vsx_role == "primary" %}
+   role primary
+   {% else %}
+   role secondary
+   {% endif %}
+
+! VSX Keepalive Interface
+interface {{ vsx.keepalive.interface }}
+   description "VSX_KEEPALIVE"
+   no shutdown
+   routing
+   ip address {{ vsx.keepalive.ip }}/30
+
+! VSX ISL Configuration
+interface {{ vsx.isl.interface }}
+   description "{{ vsx.isl.description }}"
+   no shutdown
+   no routing
+   vlan trunk allowed all
+
+! VSX Sync Configuration (optionnel)
+vsx-sync
+   configuration-sync
+   interface-vlan

@@ -1,0 +1,22 @@
+! PortChannel BGP vers WAN Router
+{% for po in portchannels %}
+{% if po.type == "routed" %}
+interface {{ po.id }}
+   description "{{ po.description }}"
+   no shutdown
+   routing
+   ip address {{ po.ip_address }}
+   {% if po.protocol == "lacp" %}
+   lacp mode active
+   {% endif %}
+
+! Member Interfaces
+{% for member in po.members %}
+interface {{ member.interface }}
+   description "{{ member.description }}"
+   no shutdown
+   no routing
+   port-channel {{ po.id }} mode {{ po.mode }}
+{% endfor %}
+{% endif %}
+{% endfor %}

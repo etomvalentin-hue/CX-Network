@@ -1,0 +1,12 @@
+! Configuration de sécurité
+spanning-tree mode {{ spanning_tree.mode | default('rstp') }}
+{% if spanning_tree.priority is defined %}
+spanning-tree priority {{ spanning_tree.priority }}
+{% endif %}
+
+! Storm Control
+{% if port_security.storm_control | default(true) %}
+storm-control broadcast
+storm-control multicast
+storm-control unknown-unicast
+{% endif %}

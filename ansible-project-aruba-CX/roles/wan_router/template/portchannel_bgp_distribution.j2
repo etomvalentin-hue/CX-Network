@@ -1,0 +1,20 @@
+! PortChannel BGP vers Distribution VSX
+{% for po in portchannels %}
+interface {{ po.id }}
+   description "{{ po.description }}"
+   no shutdown
+   routing
+   ip address {{ po.ip_address }}
+   {% if po.protocol == "lacp" %}
+   lacp mode active
+   {% endif %}
+
+! Member Interfaces
+{% for member in po.members %}
+interface {{ member.interface }}
+   description "{{ member.description }}"
+   no shutdown
+   no routing
+   port-channel {{ po.id }} mode {{ po.mode }}
+{% endfor %}
+{% endfor %}

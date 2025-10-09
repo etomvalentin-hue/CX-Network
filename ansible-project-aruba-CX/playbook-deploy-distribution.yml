@@ -3,4 +3,4 @@
   hosts: distribution
   gather_facts: false
   roles:
-    - distribution_switch
+    - distribution_vsx
