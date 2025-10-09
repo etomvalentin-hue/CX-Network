@@ -1,5 +1,5 @@
 ---
-hostname: "WAN-ROUTER-01"
+hostname: "arubaCX-Rt1"
 ansible_host: "192.168.116.136"
 role: wan
 
