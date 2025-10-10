@@ -1,8 +1,6 @@
 ---
----
 # Variables globales pour TOUS les équipements
-vault_ansible_user: "admin"
-# vault_ansible_password défini dans vault.yml
+
 
 # Standards réseau
 dns_servers:
@@ -19,3 +17,12 @@ system:
   ntp_servers:
     - "192.168.1.254"
   domain_name: "entreprise.local"
+
+# Configuration connexion
+ansible_connection: ansible.netcommon.httpapi
+ansible_network_os: arubanetworks.aoscx.aoscx
+ansible_httpapi_use_ssl: yes
+ansible_httpapi_validate_certs: no
+# vault_ansible_user et vault_ansible_password définis dans vault.yml
+ansible_user: "{{ vault_ansible_user }}"                        
+ansible_password: "{{ vault_ansible_password }}"

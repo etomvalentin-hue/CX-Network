@@ -4,5 +4,7 @@
   gather_facts: false
   collections:
     - arubanetworks.aos_switch
+  vars_files:
+    - "{{ playbook_dir }}/inventory/production/group_vars/vault.yml"
   roles:
     - wan_router
