@@ -25,7 +25,7 @@
     dest: "/tmp/{{ inventory_hostname }}_bgp.cfg"
 
 - name: Push all configurations to WAN router
-  arubaoss_config:
+  arubanetworks.aoscx.aoscx_config:
     src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
   loop:
     - base
