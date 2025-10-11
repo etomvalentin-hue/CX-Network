@@ -1,20 +1,35 @@
 ! PortChannel BGP vers Distribution VSX
 {% for po in portchannels %}
+! Configuration du PortChannel
 interface {{ po.id }}
    description "{{ po.description }}"
    no shutdown
-   routing
+   no routing
    ip address {{ po.ip_address }}
-   {% if po.protocol == "lacp" %}
-   lacp mode active
-   {% endif %}
-
-! Member Interfaces
+!
 {% for member in po.members %}
+! Configuration du membre {{ member.interface }}
 interface {{ member.interface }}
    description "{{ member.description }}"
    no shutdown
    no routing
-   port-channel {{ po.id }} mode {{ po.mode }}
+   vlan trunk native 1
+   vlan trunk allowed all
+!
 {% endfor %}
+{% endfor %}
+
+! Activation LACP (si protocol est lacp)
+{% for po in portchannels %}
+{% if po.protocol == "lacp" %}
+interface {{ po.id }}
+   lacp mode active
+!
+{% for member in po.members %}
+interface {{ member.interface }}
+   lacp rate fast
+   lacp timeout short
+!
+{% endfor %}
+{% endif %}
 {% endfor %}
