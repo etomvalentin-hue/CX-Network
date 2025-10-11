@@ -19,10 +19,11 @@ system:
   domain_name: "entreprise.local"
 
 # Configuration connexion
-ansible_connection: ansible.netcommon.httpapi
 ansible_network_os: arubanetworks.aoscx.aoscx
-ansible_httpapi_use_ssl: yes
-ansible_httpapi_validate_certs: no
+#ansible_connection: ansible.netcommon.httpapi
+#ansible_httpapi_use_ssl: yes
+#ansible_httpapi_validate_certs: no
+ansible_connection: network_cli
 # vault_ansible_user et vault_ansible_password définis dans vault.yml
 ansible_user: "{{ vault_ansible_user }}"                        
 ansible_password: "{{ vault_ansible_password }}"
