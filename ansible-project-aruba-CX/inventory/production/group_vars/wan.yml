@@ -9,17 +9,25 @@ gateway: "192.168.1.1"
 
 
 # BGP Configuration de base
-bgp:
-  as_number: 65001
-  router_id: "{{ mgmt_ip }}"
-  log_neighbor_changes: true
+#bgp:
+  # as_number: 65001
+ # router_id: "{{ mgmt_ip }}"
+ # log_neighbor_changes: true
 
-# Policies de routage
+# Policies de routage communes
 route_maps:
   - name: "TO_ISP"
     sequences:
-      - sequence: 10
-        action: "permit"
+      - action: "permit"
+        match: "ip address prefix-list LOCAL_NETWORKS"
+      - action: "deny"
+        match: "ip address prefix-list PRIVATE_NETWORKS"
+  - name: "TO_SITES"
+    sequences:
+      - action: "permit"
+        match: "ip address prefix-list INTERNAL_NETWORKS"
+      - action: "deny"
+        match: "ip address prefix-list EXPERIMENTAL_NETWORKS"
 
 # Sécurité
 security:
