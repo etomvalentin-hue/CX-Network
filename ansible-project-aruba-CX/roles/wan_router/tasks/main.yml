@@ -1,4 +1,3 @@
----
 - name: Generate and push base system configuration
   template:
     src: "base_system.j2"
@@ -19,6 +18,21 @@
     src: "wan_interfaces.j2"
     dest: "/tmp/{{ inventory_hostname }}_wan.cfg"
 
+- name: Generate and push prefix-lists configuration
+  template:
+    src: "prefix-lists.j2"
+    dest: "/tmp/{{ inventory_hostname }}_prefix_lists.cfg"
+
+- name: Generate and push ACLs configuration
+  template:
+    src: "acls.j2"
+    dest: "/tmp/{{ inventory_hostname }}_acls.cfg"
+
+- name: Generate and push route-maps configuration
+  template:
+    src: "route-maps.j2"
+    dest: "/tmp/{{ inventory_hostname }}_route_maps.cfg"
+
 - name: Generate and push BGP configuration
   template:
     src: "bgp.j2"
@@ -32,4 +46,7 @@
     - vlans
     - distribution
     - wan
+    - prefix_lists
+    - acls
+    - route_maps
     - bgp

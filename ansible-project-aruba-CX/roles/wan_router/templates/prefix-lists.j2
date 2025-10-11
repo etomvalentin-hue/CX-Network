@@ -1,0 +1,8 @@
+! Prefix Lists Configuration
+{% for prefix_list in prefix_lists %}
+! {{ prefix_list.name }}
+{% for sequence in prefix_list.sequences %}
+ip prefix-list {{ prefix_list.name }} seq {{ sequence.sequence }} {{ sequence.action }} {{ sequence.network }}
+{% endfor %}
+!
+{% endfor %}
