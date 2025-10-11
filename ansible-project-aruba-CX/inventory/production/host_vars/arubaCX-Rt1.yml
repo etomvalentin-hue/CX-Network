@@ -10,8 +10,8 @@ vlans:
 
 
 
-# PortChannel vers VSX Distribution (BGP)
-portchannels:
+# Port LAGvers VSX Distribution (BGP)
+lags:
   - id: 100
     description: "PORTCHANNEL_TO_VSX_CLUSTER_BGP"
     type: "routed"

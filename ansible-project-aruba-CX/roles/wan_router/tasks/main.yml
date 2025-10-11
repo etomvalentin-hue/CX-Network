@@ -8,9 +8,9 @@
     src: "vlans.j2"
     dest: "/tmp/{{ inventory_hostname }}_vlans.cfg"
 
-- name: Generate and push PortChannel to Distribution
+- name: Generate and push Port LAGs to Distribution
   template:
-    src: "portchannel_bgp_distribution.j2"
+    src: "port_lags_bgp_distribution.j2"
     dest: "/tmp/{{ inventory_hostname }}_distribution.cfg"
 
 - name: Generate and push WAN interfaces configuration

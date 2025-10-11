@@ -1,13 +1,13 @@
-! PortChannel BGP vers Distribution VSX
-{% for po in portchannels %}
-! Configuration du PortChannel
-interface {{ po.id }}
-   description "{{ po.description }}"
+! Port LAGs BGP vers Distribution VSX
+{% for lag in lags %}
+! Configuration du Port log
+interface {{ lag.id }}
+   description "{{ lag.description }}"
    no shutdown
    no routing
-   ip address {{ po.ip_address }}
+   ip address {{ lag.ip_address }}
 !
-{% for member in po.members %}
+{% for member in lag.members %}
 ! Configuration du membre {{ member.interface }}
 interface {{ member.interface }}
    description "{{ member.description }}"
@@ -20,12 +20,12 @@ interface {{ member.interface }}
 {% endfor %}
 
 ! Activation LACP (si protocol est lacp)
-{% for po in portchannels %}
-{% if po.protocol == "lacp" %}
-interface {{ po.id }}
+{% for lag in lags %}
+{% if lag.protocol == "lacp" %}
+interface {{ lag.id }}
    lacp mode active
 !
-{% for member in po.members %}
+{% for member in lag.members %}
 interface {{ member.interface }}
    lacp rate fast
    lacp timeout short
