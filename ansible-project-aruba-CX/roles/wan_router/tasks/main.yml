@@ -41,7 +41,7 @@
 - name: Push all configurations to WAN router
   arubanetworks.aoscx.aoscx_config:
     lines: "{{ lookup('file', '/tmp/' + inventory_hostname + '_' + item + '.cfg') | split('\n') }}"
-    save_when: always
+    save: true
   loop:
     - base
     - vlans
