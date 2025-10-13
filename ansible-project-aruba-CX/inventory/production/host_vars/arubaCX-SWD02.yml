@@ -140,7 +140,7 @@ bgp:
     - "10.10.0.0/30"
     - "192.168.10.0/24" 
   neighbors:
-    - ip: "192.168.10.2"
+    - ip: "192.168.10.1"
       remote_as: 65001
       description: "WAN_ROUTER_arubaCX-Rt1"
       next_hop_self: true
