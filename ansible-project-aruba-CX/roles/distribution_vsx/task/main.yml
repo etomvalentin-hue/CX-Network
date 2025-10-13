@@ -1,4 +1,4 @@
----
+
 - name: Generate and push base system configuration
   template:
     src: "base_system.j2"

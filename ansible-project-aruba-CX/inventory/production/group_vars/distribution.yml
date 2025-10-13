@@ -1,14 +1,14 @@
 ---
-# Configuration commune à tous les switches de distribution
-ansible_connection: ansible.netcommon.httpapi
-ansible_network_os: arubanetworks.aos_switch.arubaoss
-ansible_user: "{{ vault_ansible_user }}"
-ansible_password: "{{ vault_ansible_password }}"
-ansible_become: yes
 
 # Paramètres communs
 role: "distribution"
 mgmt_vlan: 10
+
+mgmt_ip: "{{ ansible_host }}"  # Utilise l'IP de connexion
+mgmt_subnet: "255.255.255.0"
+gateway: "192.168.1.1"
+
+
 
 # VLANs communs
 common_vlans:
