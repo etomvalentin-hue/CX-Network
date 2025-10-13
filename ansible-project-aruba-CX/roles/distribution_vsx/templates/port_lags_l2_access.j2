@@ -1,25 +1,25 @@
-! L2 PortChannels vers switches d'accès
-{% for po in portchannels %}
-{% if po.type == "switched" %}
-interface {{ po.id }}
-   description "{{ po.description }}"
+! L2 lags vers switches d'accès
+{% for lag in lags_access %}
+{% if lag.type == "switched" %}
+interface {{ lag.id }}
+   description "{{ lag.description }}"
    no shutdown
    no routing
-   vlan trunk allowed {{ po.vlans.allowed }}
-   vlan trunk native {{ po.vlans.native }}
+   vlan trunk allowed {{ lag.vlans.allowed }}
+   vlan trunk native {{ lag.vlans.native }}
 
 ! Member Interfaces
-{% for member in po.members %}
-interface {{ member.interface }}
-   description "{{ member.description }}"
+{% for member in lag.members %}
+interface {{ lag.interface }}
+   description "{{ lag.description }}"
    no shutdown
    no routing
-   port-channel {{ po.id }} mode {{ po.mode }}
+   lag {{ lag.id }} mode {{ lag.mode }}
 {% endfor %}
 
 ! LACP Configuration
-{% if po.protocol == "lacp" %}
-interface {{ po.id }}
+{% if lag.protocol == "lacp" %}
+interface {{ lag.id }}
    lacp mode active
 {% endif %}
 {% endif %}
