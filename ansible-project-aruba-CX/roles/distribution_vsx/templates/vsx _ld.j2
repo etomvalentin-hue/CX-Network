@@ -1,0 +1,35 @@
+! VSX Configuration
+{% if vsx is defined %}
+vsx
+   system-mac {{ vsx.system_mac | default('00:01:02:03:04:05') }}
+   inter-switch-link {{ vsx.isl.interface | default('1/1/4-1/1/5') }}
+   {% if vsx_role == "primary" %}
+   role primary
+   {% else %}
+   role secondary
+   {% endif %}
+
+! VSX Keepalive
+interface {{ vsx.keepalive.interface | default('1/1/6') }}
+   description "VSX_KEEPALIVE"
+   no shutdown
+   no routing
+   ip address {{ vsx.keepalive.ip | default('192.168.255.1') }}/30
+
+! VSX ISL Interfaces
+{% for iface_range in vsx.isl.interface.split(',') %}
+interface {{ iface_range }}
+   description "{{ vsx.isl.description | default('VSX_ISL') }}"
+   no shutdown
+   no routing
+   vlan trunk native 1
+   vlan trunk allowed all
+{% endfor %}
+
+! VSX Sync
+vsx-sync
+   configuration-sync
+   interface-vlan
+{% else %}
+! VSX configuration skipped - vsx not defined
+{% endif %}
