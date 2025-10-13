@@ -1,6 +1,6 @@
 ---
 # Configuration de base
-hostname: arubaCX-SWD01
+hostname: arubaCX-SWD02
 role: distribution
 vsx_role: "secondary"
 ansible_host: 192.168.116.137
