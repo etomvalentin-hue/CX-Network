@@ -12,4 +12,5 @@ router ospf {{ ospf.process_id }}
    {% for redistribute in ospf.redistribute %}
    redistribute {{ redistribute.protocol }} route-map {{ redistribute.route_map }}
    {% endfor %}
+   {% endif %}
    {% endfor %}
