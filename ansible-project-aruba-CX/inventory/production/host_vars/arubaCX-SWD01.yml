@@ -4,7 +4,8 @@ hostname: arubaCX-SWD01
 role: distribution
 vsx_role: "primary"
 ansible_host: 192.168.116.130
-
+mgmt_ip: "{{ ansible_host }}"
+mgmt_subnet: "24"
 # Configuration VSX
 vsx:
   system_mac: "00:01:02:03:04:05"     # MÊME MAC
