@@ -14,15 +14,30 @@
     src: "vlans.j2"
     dest: "/tmp/{{ inventory_hostname }}_vlans.cfg"
 
-- name: Generate and push BGP WAN PortChannel
+- name: Generate and push prefix-lists configuration
   template:
-    src: "portchannel_bgp_wan.j2"
-    dest: "/tmp/{{ inventory_hostname }}_wan_po.cfg"
+    src: "prefix-lists.j2"
+    dest: "/tmp/{{ inventory_hostname }}_prefix_lists.cfg"
 
-- name: Generate and push L2 Access PortChannels
+- name: Generate and push ACLs configuration
+  template:
+    src: "acls.j2"
+    dest: "/tmp/{{ inventory_hostname }}_acls.cfg"
+
+- name: Generate and push route-maps configuration
+  template:
+    src: "route-maps.j2"
+    dest: "/tmp/{{ inventory_hostname }}_route_maps.cfg"
+
+- name: Generate and push BGP WAN LAG
+  template:
+    src: "port_lags_bgp_wan.j2"
+    dest: "/tmp/{{ inventory_hostname }}_wan_lag.cfg"
+
+- name: Generate and push L2 Access LAGs
   template:
     src: "portchannel_l2_access.j2"
-    dest: "/tmp/{{ inventory_hostname }}_access_po.cfg"
+    dest: "/tmp/{{ inventory_hostname }}_access_lag.cfg"
 
 - name: Generate and push BGP configuration
   template:
@@ -36,12 +51,18 @@
 
 - name: Push all configurations to distribution switch
   arubanetworks.aoscx.aoscx_config:
-    src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
+    lines: "{{ lookup('file', '/tmp/' + inventory_hostname + '_' + item + '.cfg') | split('\n') }}"
+    save_when: always
   loop:
     - base
     - vsx
     - vlans
-    - wan_po
-    - access_po
+    - prefix_lists
+    - acls
+    - route_maps
+    - wan_lag
+    - access_lag
     - bgp
     - ospf
+  loop_control:
+    label: "{{ item }}"
