@@ -1,0 +1,11 @@
+! Route Maps Configuration
+{% for route_map in route_maps %}
+! {{ route_map.name }}
+{% for sequence in route_map.sequences %}
+route-map {{ route_map.name }} {{ sequence.action }} {{ loop.index * 10 }}
+{% if sequence.match %}
+   match {{ sequence.match }}
+{% endif %}
+!
+{% endfor %}
+{% endfor %}

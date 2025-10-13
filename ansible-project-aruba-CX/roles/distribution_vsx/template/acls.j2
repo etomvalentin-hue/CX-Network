@@ -1,0 +1,8 @@
+! ACLs Configuration
+{% for acl in acls %}
+! {{ acl.name }}
+{% for sequence in acl.sequences %}
+{{ acl.type }} access-list {{ acl.name }} seq {{ sequence.sequence }} {{ sequence.action }} {{ sequence.source }} {{ sequence.destination }}
+{% endfor %}
+!
+{% endfor %}

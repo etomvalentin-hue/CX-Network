@@ -7,3 +7,9 @@ router ospf {{ ospf.process_id }}
    {% for interface in ospf.passive_interfaces %}
    passive-interface {{ interface }}
    {% endfor %}
+
+   {% if redistribute.protocol is defined and redistribute.protocol %}
+   {% for redistribute in ospf.redistribute %}
+   redistribute {{ redistribute.protocol }} route-map {{ redistribute.route_map }}
+   {% endfor %}
+   {% endfor %}
