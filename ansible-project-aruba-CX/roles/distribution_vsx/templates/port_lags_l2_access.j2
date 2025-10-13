@@ -10,8 +10,8 @@ interface {{ lag.id }}
 
 ! Member Interfaces
 {% for member in lag.members %}
-interface {{ lag.interface }}
-   description "{{ lag.description }}"
+interface {{ members.interface }}
+   description "{{ members.description }}"
    no shutdown
    no routing
    lag {{ lag.id }} mode {{ lag.mode }}
