@@ -28,5 +28,6 @@ router bgp {{ bgp.as_number }}
    {% if redistribute.protocol is defined and redistribute.protocol %}
    {% for redistribute in bgp.redistribute %}
    redistribute {{ redistribute.protocol }} route-map {{ redistribute.route_map }}
+   {% endfor %}
    {% endif %}
    {% endfor %}
