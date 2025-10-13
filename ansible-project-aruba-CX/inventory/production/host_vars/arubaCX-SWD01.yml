@@ -47,8 +47,8 @@ lags:
     protocol: "lacp"
     mode: "active"
     members:
-      - interface: "1/1/3
-        description: "lag20_TO_MEMBER_TO_ACC_02"
+      - interface: "1/1/3"
+        description: "lag10_MEMBER_TO_SWA02"
     vlans:
       allowed: "10,100,200"
       native: 1

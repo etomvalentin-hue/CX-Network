@@ -1,6 +1,4 @@
 ---
-# Variables globales pour TOUS les équipements
-
 
 # Standards réseau
 dns_servers:
