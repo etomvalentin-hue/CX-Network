@@ -36,7 +36,7 @@
 
 - name: Generate and push L2 Access LAGs
   template:
-    src: "portchannel_l2_access.j2"
+    src: "port_lags_l2_access.j2"
     dest: "/tmp/{{ inventory_hostname }}_access_lag.cfg"
 
 - name: Generate and push BGP configuration
