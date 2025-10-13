@@ -29,6 +29,7 @@ lags:
         description: "PO100_MEMBER_TO_WAN_ROUTER_arubaCX-Rt1"
 
 # Port LAGs vers switches d'accès (OSPF)
+lags_access:
   - id: 10
     description: "lag_TO_ACCESS_SWA01"
     type: "switched"
