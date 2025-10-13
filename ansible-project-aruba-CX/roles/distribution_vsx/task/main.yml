@@ -35,7 +35,7 @@
     dest: "/tmp/{{ inventory_hostname }}_ospf.cfg"
 
 - name: Push all configurations to distribution switch
-  arubaoss_config:
+  arubanetworks.aoscx.aoscx_config:
     src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
   loop:
     - base

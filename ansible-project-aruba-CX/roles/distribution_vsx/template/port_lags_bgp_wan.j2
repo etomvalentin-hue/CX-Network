@@ -1,0 +1,24 @@
+! Port LAGs BGP vers Distribution VSX
+{% for lag in lags %}
+! Configuration du LAG {{ lag.id }}
+interface lag {{ lag.id }}
+   description "{{ lag.description }}"
+   no shutdown
+   no routing
+   ip address {{ lag.ip_address }}
+   lacp mode active
+!
+{% for member in lag.members %}
+! Configuration du membre {{ member.interface }}
+interface {{ member.interface }}
+   description "{{ member.description }}"
+   no shutdown
+   no routing
+   vlan trunk native 1
+   vlan trunk allowed all
+   lag {{ lag.id }}
+   lacp rate fast
+   lacp timeout short
+!
+{% endfor %}
+{% endfor %}
