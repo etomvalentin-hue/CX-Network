@@ -5,7 +5,7 @@ Il couvre les aspects suivants :
 
 - **Intégration NAC** (ClearPass ou autre solution 802.1X)
 - **Configuration MLAG** (VSX entre deux switches Aruba CX)
-- **Routage BGP** (Underlay / Overlay / Peering)
+- **Routage BGP** 
 - **Configuration des interfaces** (Access, Trunk, Uplink, Management)
 
 ---
