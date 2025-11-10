@@ -30,7 +30,8 @@
     dest: "/tmp/{{ inventory_hostname }}_security.cfg"
 
 - name: Push all configurations to access switch
-  arubanetworks.aos_switch.config:
+  #arubanetworks.aoscx.aoscx_config:
+  arubanetworks.aos_switch.cli_config:
     src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
   loop:
     - base
