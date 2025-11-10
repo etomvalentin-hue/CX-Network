@@ -7,6 +7,8 @@ interface lag {{ lag.id }}
     lacp mode {{ lag.mode }}
     vlan trunk native {{ lag.vlans.native | default(1) }}
     vlan trunk allowed {{ lag.vlans.allowed }}
+	spanning-tree bpdu-guard
+    spanning-tree admin-edge-port
 
 ! Membres du LAG
 {% for member in lag.members %}
