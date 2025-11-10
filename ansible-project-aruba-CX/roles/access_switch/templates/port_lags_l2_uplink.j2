@@ -1,19 +1,21 @@
-! L2 PortChannel vers Distribution VSX
+! L2 LAG uplink vers Distribution VSX
+
 {% for lag in lags_Uplink %}
-interface {{ lags.id }}
+
+lag {{ lag.id }} dynamic
    description "{{ lag.description }}"
    no shutdown
    no routing
    vlan trunk allowed {{ lag.vlans.allowed }}
    vlan trunk native {{ lag.vlans.native | default(1) }}
 
-! Member Interfaces
 {% for member in lag.members %}
 interface {{ member.interface }}
    description "{{ member.description }}"
    no shutdown
    no routing
-   port-channel {{ lag.id }} mode {{ lag.mode }}
+   lag {{ lag.id }}
+{% endfor %}
 
 ! Désactiver le spanning-tree sur les membres (géré sur le PortChannel)
 spanning-tree {{ member.interface }} admin-point-to-point

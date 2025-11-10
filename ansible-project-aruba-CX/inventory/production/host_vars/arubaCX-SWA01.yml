@@ -11,7 +11,7 @@ mgmt_subnet: "255.255.255.0"
 gateway: "192.168.116.1"
 
 # Port LAG vers Distribution (L2)
-lags:
+lags_Uplink:
   - id: 10
     description: "PORTCHANNEL_TO_VSX_DISTRIBUTION"
     type: "switched"
@@ -41,7 +41,9 @@ vlans:
 
 # Ports d'accès utilisateurs (L2)
 access_ports:
-  - range: "1/1/4-1/1/5"
+  - range: 
+      - "1/1/4"
+      - "1/1/5"
     description: "USER_PORTS"
     type: "access"
     vlan: 100
