@@ -8,7 +8,7 @@ role: "access"
 mgmt_vlan: 10
 mgmt_ip: "192.168.116.138"
 mgmt_subnet: "255.255.255.0"
-gateway: "192.168.116.1
+gateway: "192.168.116.1"
 
 # PortChannel vers Distribution (L2)
 portchannels:
