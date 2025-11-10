@@ -8,7 +8,7 @@
     #- "{{ playbook_dir }}/inventory/production/group_vars/vault.yml"
     
   vars_files:
-    - inventory/production/group_vars/vault.yml
+    - inventory/production/group_vars/password
     
   vars: 
     ansible_user: "{{ vault_ansible_user }}"
