@@ -9,9 +9,9 @@
     src: "vlans.j2"
     dest: "/tmp/{{ inventory_hostname }}_vlans.cfg"
 
-- name: Generate and push L2 Uplink PortChannel
+- name: Generate and push L2 Uplink lag
   template:
-    src: "portchannel_l2_uplink.j2"
+    src: "port_lags_l2_uplink.j2"
     dest: "/tmp/{{ inventory_hostname }}_uplink.cfg"
 
 - name: Generate and push access ports configuration
@@ -33,9 +33,9 @@
   arubanetworks.aoscx.aoscx_config:
     src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
   loop:
-    - base
+    - base_system
     - vlans
-    - uplink
+    - port_lags_l2_uplink
     - access_ports
     - static_ports
     - security

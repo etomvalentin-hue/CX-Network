@@ -10,8 +10,8 @@ mgmt_ip: "192.168.116.138"
 mgmt_subnet: "255.255.255.0"
 gateway: "192.168.116.1"
 
-# PortChannel vers Distribution (L2)
-portchannels:
+# Port LAG vers Distribution (L2)
+lags:
   - id: 10
     description: "PORTCHANNEL_TO_VSX_DISTRIBUTION"
     type: "switched"
@@ -25,6 +25,8 @@ portchannels:
     vlans:
       allowed: "10,100,110,200"
       native: 1
+
+
 
 # VLANs (L2 seulement)
 vlans:
