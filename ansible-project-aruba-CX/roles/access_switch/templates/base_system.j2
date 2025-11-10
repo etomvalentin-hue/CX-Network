@@ -1,15 +1,19 @@
 ! Configuration de base pour {{ inventory_hostname }}
 hostname {{ hostname | default(inventory_hostname) }}
-clock timezone {{ timezone | default('Europe/Paris') }}
-ip domain-name {{ system.domain_name }}
+clock timezone {{ system.timezone | default('Europe/Paris') }}
+ip domain-name {{ system.domain_name | default('entreprise.local') }}
 
 ! NTP Configuration
+{% if system.ntp_servers is defined %}
 {% for ntp in system.ntp_servers %}
 ntp server {{ ntp }}
 {% endfor %}
+{% endif %}
 
 ! Management Interface
+{% if mgmt_vlan is defined and mgmt_ip is defined %}
 interface vlan {{ mgmt_vlan }}
    description "MGMT_VLAN"
-   ip address {{ mgmt_ip }}/{{ mgmt_subnet }}
+   ip address {{ mgmt_ip }}/{{ mgmt_subnet | default('24') }}
    no shutdown
+{% endif %}
