@@ -8,16 +8,6 @@ mgmt_vlan: 10
 mgmt_subnet: "255.255.255.0"
 gateway: "192.168.1.1"
 
-# VLANs par défaut pour l'accès
-default_vlans:
-  - id: 10
-    name: "MGMT"
-  - id: 100
-    name: "USER_DATA"
-  - id: 110
-    name: "USER_VOICE"
-  - id: 150
-    name: "IOT_DEVICES"
 
 # Standards de sécurité pour ports d'accès
 port_security:
