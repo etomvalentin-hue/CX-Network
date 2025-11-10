@@ -1,18 +1,17 @@
 ---
 - name: Deploy Access Switch Configuration
   hosts: access
-  gather_facts: true
+  gather_facts: false
   collections:
     - arubanetworks.aos_switch
-
-    #- "{{ playbook_dir }}/inventory/production/group_vars/vault.yml"
     
   vars_files:
-    - inventory/production/group_vars/password
+    #- inventory/production/group_vars/password
+    - "{{ playbook_dir }}/inventory/production/group_vars/vault.yml"
     
-  vars: 
-    ansible_user: admin
-    ansible_password: admin2023
+  #vars: 
+    #ansible_user: admin
+    #ansible_password: admin2023
     
   roles:
     - access_switch
