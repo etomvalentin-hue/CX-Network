@@ -1,12 +1,11 @@
 ---
-# Configuration commune à tous les switches d'accès
-ansible_connection: ansible.netcommon.httpapi
-ansible_network_os: arubanetworks.aos_switch.arubaoss
-ansible_become: yes
-
 # Paramètres communs
 role: "access"
 mgmt_vlan: 10
+
+mgmt_ip: "{{ ansible_host }}"  # Utilise l'IP de connexion
+mgmt_subnet: "255.255.255.0"
+gateway: "192.168.1.1"
 
 # VLANs par défaut pour l'accès
 default_vlans:

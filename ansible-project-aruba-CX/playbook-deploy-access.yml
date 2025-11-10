@@ -8,11 +8,6 @@
   vars_files:
     #- inventory/production/group_vars/password.yaml
     - "{{ playbook_dir }}/inventory/production/group_vars/password.yml"
-
-    
-  #vars: 
-    #ansible_user: admin
-    #ansible_password: admin2023
     
   roles:
     - access_switch
