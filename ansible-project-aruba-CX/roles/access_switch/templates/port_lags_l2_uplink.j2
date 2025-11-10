@@ -1,28 +1,22 @@
 ! L2 LAG uplink vers Distribution VSX
 {% for lag in lags_Uplink %}
-
-lag {{ lag.id }} dynamic
-   description "{{ lag.description }}"
-   no shutdown
-   no routing
-   vlan trunk allowed {{ lag.vlans.allowed }}
-   vlan trunk native {{ lag.vlans.native | default(1) }}
+interface lag {{ lag.id }}
+    description "{{ lag.description }}"
+    no shutdown
+    no routing
+    lacp mode {{ lag.mode }}
+    vlan trunk native {{ lag.vlans.native | default(1) }}
+    vlan trunk allowed {{ lag.vlans.allowed }}
 
 ! Membres du LAG
 {% for member in lag.members %}
 interface {{ member.interface }}
-   description "{{ member.description }}"
-   no shutdown
-   no routing
-   lag {{ lag.id }}
-   spanning-tree bpdu-guard
-   spanning-tree admin-edge-port
+    description "{{ member.description }}"
+    no shutdown
+    no routing
+    lag {{ lag.id }}
+    spanning-tree bpdu-guard
+    spanning-tree admin-edge-port
 {% endfor %}
-
-! Activer LACP si demandé
-{% if lag.protocol == "lacp" %}
-lag {{ lag.id }} lacp mode active
-{% endif %}
-
 
 {% endfor %}
