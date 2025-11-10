@@ -1,4 +1,4 @@
-! Configuration de base pour {{ hostname }}
+! Configuration de base pour {{ inventory_hostname }}
 hostname {{ hostname }}
 clock timezone {{ system.timezone | default('Europe/Paris') }}
 ip domain-name {{ system.domain_name | default('entreprise.local') }}
