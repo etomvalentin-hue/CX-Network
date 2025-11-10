@@ -24,8 +24,5 @@ interface {{ member.interface }}
 lag {{ lag.id }} lacp mode active
 {% endif %}
 
-! Spanning-tree sur le PortChannel
-lag {{ lag.id }} spanning-tree bpdu-guard
-lag {{ lag.id }} spanning-tree admin-edge-port
 
 {% endfor %}
