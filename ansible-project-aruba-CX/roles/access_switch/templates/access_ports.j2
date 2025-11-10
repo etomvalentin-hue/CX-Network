@@ -1,7 +1,8 @@
 ! Ports d'accès utilisateurs
 {% for port_group in access_ports %}
-! Configuration pour {{ port_group.range }}
-interface {{ port_group.range }}
+! Configuration pour les ports {{ port_group.range | join(', ') }}
+{% for port in port_group.range %}
+interface {{ port }}
    description "{{ port_group.description }}"
    no shutdown
    no routing
@@ -21,4 +22,5 @@ interface {{ port_group.range }}
    storm-control unknown-unicast
 {% endif %}
 !
+{% endfor %}
 {% endfor %}

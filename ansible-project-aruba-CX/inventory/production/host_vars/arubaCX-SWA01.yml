@@ -52,7 +52,9 @@ access_ports:
     portfast: true
     storm_control: true
 
-  - range: "1/1/6-1/1/7"
+  - range: 
+      - "1/1/6"
+      - "1/1/7"
     description: "SERVER_PORTS"
     type: "access"
     vlan: 200
