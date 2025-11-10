@@ -11,8 +11,8 @@
     - inventory/production/group_vars/vault.yml
     
   vars: 
-    ansible_user: {{ "vault_ansible_user" }}
-    ansible_password: {{ "vault_ansible_password" }}
+    ansible_user: "{{ vault_ansible_user }}"
+    ansible_password: "{{ vault_ansible_password }}"
     
   roles:
     - access_switch
