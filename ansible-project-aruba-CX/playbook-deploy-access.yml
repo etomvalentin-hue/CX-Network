@@ -4,9 +4,10 @@
   gather_facts: false
   collections:
     - arubanetworks.aos_switch
-  vars_files:
+
     #- "{{ playbook_dir }}/inventory/production/group_vars/vault.yml"
-    - inventory/production/group_vars/vault.yml
+ vault_ansible_user: "admin"
+ vault_ansible_password: "admin2023"
     
   roles:
     - access_switch
