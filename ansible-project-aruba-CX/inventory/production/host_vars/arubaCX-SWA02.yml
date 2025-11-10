@@ -1,16 +1,17 @@
 ---
+# host vars arubaCX-SWA02 SWITCH ACCES
 # Données UNIQUES à ce switch
 hostname: "arubaCX-SWA02"
-ansible_host: 192.168.1.11 
-role: access
+ansible_host: 192.168.116.138 
+role: "access"
 
-vlans:
-  - id: 10
-    name: "MGMT"
-    ip_address: "192.168.10.16/24"
+mgmt_vlan: 10
+mgmt_ip: "192.168.116.x"
+mgmt_subnet: "255.255.255.0"
+gateway: "192.168.116.1"
 
-# PortChannel vers Distribution (L2)
-portchannels:
+# Port LAG vers Distribution (L2)
+lags_Uplink:
   - id: 10
     description: "PORTCHANNEL_TO_VSX_DISTRIBUTION"
     type: "switched"
@@ -25,6 +26,8 @@ portchannels:
       allowed: "10,100,110,200"
       native: 1
 
+
+
 # VLANs (L2 seulement)
 vlans:
   - id: 10
@@ -38,20 +41,24 @@ vlans:
 
 # Ports d'accès utilisateurs (L2)
 access_ports:
-  - range: "1/1/4-1/1/5"
+  - range: 
+      - "1/1/4"
+      - "1/1/5"
     description: "USER_PORTS"
     type: "access"
     vlan: 100
     voice_vlan: 110
     bpdu_guard: true
     portfast: true
-    storm_control: true
+ 
 
-  - range: "1/1/6-1/1/7"
-    description: "SERVER_PORTS"
-    type: "access"
-    vlan: 200
-    bpdu_guard: true
+ # - range: 
+ #     - "1/1/6"
+ #     - "1/1/7"
+ #   description: "SERVER_PORTS"
+ #   type: "access"
+ #   vlan: 200
+ #   bpdu_guard: true
 
 # Configuration sécurité
 spanning_tree:

@@ -47,7 +47,7 @@ access_ports:
     description: "USER_PORTS"
     type: "access"
     vlan: 100
-    voice_vlan: 110
+    voice-vlan: 110
     bpdu_guard: true
     portfast: true
     storm_control: true
