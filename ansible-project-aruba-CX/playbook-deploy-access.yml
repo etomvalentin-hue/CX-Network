@@ -11,8 +11,8 @@
     - inventory/production/group_vars/password
     
   vars: 
-    ansible_user: "{{ vault_ansible_user }}"
-    ansible_password: "{{ vault_ansible_password }}"
+    ansible_user: admin
+    ansible_password: admin2023
     
   roles:
     - access_switch
