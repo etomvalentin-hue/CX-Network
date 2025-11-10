@@ -24,7 +24,6 @@ Il couvre les aspects suivants :
 CX-Network/ansible-projet-aruba-CX/
 │
 ├── inventory/ 
-
 │ └── production/
 │  ├── group_vars/
 │  │     ├── acces.yml
@@ -32,7 +31,6 @@ CX-Network/ansible-projet-aruba-CX/
 │  │     ├── distribution.yml
 │  │     ├── vault.yml # Variables chiffrées (mots de passe, clés)
 │  │     └── wan.yml
-
 │  ├── host_vars/
 │  │     ├── arubaCX-Rt1.yml
 │  │     ├── arubaCX-SWA01.yml
@@ -40,7 +38,6 @@ CX-Network/ansible-projet-aruba-CX/
 │  │     ├── arubaCX-SWD01.yml
 │  │     └── arubaCX-SWD02.yml
 │  └── hosts.yml
-
 │
 ├── roles/
 │ ├── access_switch/
