@@ -2,7 +2,7 @@
 - name: Generate and push base system configuration
   template:
     src: "base_system.j2"
-    dest: "/tmp/{{ inventory_hostname }}_base.cfg"
+    dest: "/tmp/{{ hostname }}_base.cfg"
 
 - name: Generate and push VLAN configuration
   template:
