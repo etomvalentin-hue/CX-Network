@@ -6,10 +6,13 @@
     - arubanetworks.aos_switch
 
     #- "{{ playbook_dir }}/inventory/production/group_vars/vault.yml"
-
+    
+  vars_files:
+    - inventory/production/group_vars/vault.yml
+    
   vars: 
-    ansible_user: admin
-    ansible_password: admin2023
+    ansible_user: {{ "vault_ansible_user" }}
+    ansible_password: {{ "vault_ansible_password" }}
     
   roles:
     - access_switch
