@@ -31,7 +31,7 @@
 
 - name: Push all configurations to access switch
   #arubanetworks.aoscx.aoscx_config:
-  arubanetworks.aos_switch.cli_config:
+  ansible.netcommon.cli_config:
     src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
   loop:
     - base
