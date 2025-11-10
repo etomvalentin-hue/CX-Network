@@ -1,19 +1,15 @@
 ! Configuration de base pour {{ inventory_hostname }}
-hostname {{ hostname }}
-clock timezone {{ system.timezone | default('Europe/Paris') }}
-ip domain-name {{ system.domain_name | default('entreprise.local') }}
+hostname {{ hostname | default(inventory_hostname) }}
+clock timezone {{ timezone | default('Europe/Paris') }}
+ip domain-name {{ system.domain_name }}
 
 ! NTP Configuration
 {% for ntp in system.ntp_servers %}
 ntp server {{ ntp }}
 {% endfor %}
 
-! Management Interface (L3 seulement pour management)
+! Management Interface
 interface vlan {{ mgmt_vlan }}
    description "MGMT_VLAN"
-   ip address {{ mgmt_ip }}/{{ mgmt_subnet | default('255.255.255.0') }}
+   ip address {{ mgmt_ip }}/{{ mgmt_subnet }}
    no shutdown
-
-! Pas de routing sur les switches d'accès
-no router ospf
-no router bgp
