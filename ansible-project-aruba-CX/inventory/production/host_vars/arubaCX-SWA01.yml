@@ -62,7 +62,7 @@ access_ports:
 
 # Configuration sécurité
 spanning_tree:
-  mode: "rstp"
+  mode: "rpvst"
   priority: 32768
 
 port_security:
