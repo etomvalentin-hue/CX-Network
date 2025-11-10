@@ -1,7 +1,7 @@
 ---
 - name: Deploy Access Switch Configuration
   hosts: access
-  gather_facts: false
+  gather_facts: true
   collections:
     - arubanetworks.aos_switch
 
