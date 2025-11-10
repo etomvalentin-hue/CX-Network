@@ -33,9 +33,9 @@
   arubanetworks.aoscx.aoscx_config:
     src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
   loop:
-    - base_system
+    - base
     - vlans
-    - port_lags_l2_uplink
+    - uplink
     - access_ports
     - static_ports
     - security
