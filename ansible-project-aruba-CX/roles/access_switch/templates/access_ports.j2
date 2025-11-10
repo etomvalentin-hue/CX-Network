@@ -1,24 +1,24 @@
 ! Ports d'accès utilisateurs
 {% for port_group in access_ports %}
-{% for port in port_group.range %}
-interface {{ port }}
+! Configuration pour {{ port_group.range }}
+interface {{ port_group.range }}
    description "{{ port_group.description }}"
    no shutdown
    no routing
    vlan access {{ port_group.vlan }}
-   {% if port_group.voice_vlan is defined %}
+{% if port_group.voice_vlan is defined %}
    vlan voice {{ port_group.voice_vlan }}
-   {% endif %}
-   {% if port_group.bpdu_guard | default(true) %}
-   spanning-tree {{ port }} bpdu-guard
-   {% endif %}
-   {% if port_group.portfast | default(true) %}
-   spanning-tree {{ port }} admin-edge-port
-   {% endif %}
-   {% if port_group.storm_control | default(true) %}
+{% endif %}
+{% if port_group.bpdu_guard | default(true) %}
+   spanning-tree bpdu-guard
+{% endif %}
+{% if port_group.portfast | default(true) %}
+   spanning-tree admin-edge-port
+{% endif %}
+{% if port_group.storm_control | default(true) %}
    storm-control broadcast
-   storm-control multicast
+   storm-control multicast  
    storm-control unknown-unicast
-   {% endif %}
-{% endfor %}
+{% endif %}
+!
 {% endfor %}
