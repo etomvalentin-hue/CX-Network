@@ -7,8 +7,8 @@ interface {{ port }}
    no shutdown
    no routing
    vlan access {{ port_group.vlan }}
-{% if port_group.voice-vlan is defined %}
-   vlan-voice {{ port_group.voice-vlan }}
+{% if port_group.voice_vlan is defined %}
+   voice-vlan {{ port_group.voice_vlan }}    {# ← Essayez cette syntaxe #}
 {% endif %}
 {% if port_group.bpdu_guard | default(true) %}
    spanning-tree bpdu-guard
