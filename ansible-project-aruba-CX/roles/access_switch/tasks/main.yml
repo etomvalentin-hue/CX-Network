@@ -4,6 +4,11 @@
     src: "base_system.j2"
     dest: "/tmp/{{ inventory_hostname }}_base.cfg"
 
+- name: Generate and push spanning-tree configuration
+  template:
+    src: "spanning_tree.j2"
+    dest: "/tmp/{{ inventory_hostname }}_spanning_tree.cfg"
+
 - name: Generate and push VLAN configuration
   template:
     src: "vlans.j2"
@@ -34,6 +39,7 @@
     src: "/tmp/{{ inventory_hostname }}_{{ item }}.cfg"
   loop:
     - base
+    - spanning_tree
     - vlans
     - uplink
     - access_ports
