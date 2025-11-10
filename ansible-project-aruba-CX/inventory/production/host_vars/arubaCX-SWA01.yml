@@ -5,10 +5,10 @@ hostname: "arubaCX-SWA01"
 ansible_host: 192.168.116.138 
 role: "access"
 
-vlans:
-  - id: 10
-    name: "MGMT"
-    ip_address: "192.168.116.138/24"
+mgmt_vlan: 10
+mgmt_ip: "192.168.116.138"
+mgmt_subnet: "255.255.255.0"
+gateway: "192.168.116.1
 
 # PortChannel vers Distribution (L2)
 portchannels:
