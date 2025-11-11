@@ -51,5 +51,4 @@
     - uplink
     - access_ports
     - static_ports
-    - nac
     - security
