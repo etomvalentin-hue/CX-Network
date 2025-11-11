@@ -1,0 +1,38 @@
+! ===== CONFIGURATION NAC / 802.1X =====
+
+! Serveurs RADIUS
+{% for group in nac.server_groups %}
+aaa server-group "{{ group.name }}"
+{% for server in group.servers %}
+   host {{ server.host }} key {{ server.key }}
+{% endfor %}
+!
+{% endfor %}
+
+! Profils d'authentification
+{% for profile in nac.authentication_profiles %}
+authentication-profile "{{ profile.name }}"
+   method {{ profile.protocol }} server-group "{{ profile.server_group }}"
+   !
+{% endfor %}
+
+! Configuration globale 802.1X
+dot1x
+   system-auth-control
+   !
+
+! Rôles et politiques
+{% if nac.default_role is defined %}
+role name "{{ nac.default_role }}"
+   !
+{% endif %}
+
+{% if nac.guest_role is defined %}
+role name "{{ nac.guest_role }}"
+   !
+{% endif %}
+
+{% if nac.voice_role is defined %}
+role name "{{ nac.voice_role }}"
+   !
+{% endif %}
