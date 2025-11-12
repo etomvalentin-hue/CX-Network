@@ -1,7 +1,4 @@
 ---
-- name: Include Acces parameter
-  include_vars:
-    file: "acces.yml"
 
 - name: Generate and push base system configuration
   template:

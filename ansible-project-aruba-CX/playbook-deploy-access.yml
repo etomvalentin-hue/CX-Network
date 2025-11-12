@@ -8,6 +8,6 @@
   vars_files:
     #- inventory/production/group_vars/password.yaml
     - "{{ playbook_dir }}/inventory/production/group_vars/password.yml"
-    #- "{{ playbook_dir }}/inventory/production/group_vars/acces.yml"   
+    - "{{ playbook_dir }}/inventory/production/group_vars/acces.yml"   
   roles:
     - access_switch
