@@ -1,10 +1,10 @@
-! ===== CONFIGURATION NAC - ÉTAPE 1: SERVEUR GROUP =====
-
+! ===== CONFIGURATION NAC - AJOUT DES SERVEURS =====
 
 ! Création du groupe de serveurs RADIUS
 aaa group server radius RADIUS_SERVERS
-   server 1.1.1.1
-   server 1.1.1.2
-   exit
+server 1.1.1.1
+server 1.1.1.2
+exit
 
+! Activation 802.1X
 aaa authentication port-access dot1x authenticator enable
