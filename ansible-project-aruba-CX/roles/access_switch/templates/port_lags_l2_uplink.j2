@@ -8,7 +8,7 @@ interface lag {{ lag.id }}
     vlan trunk native {{ lag.vlans.native | default(1) }}
     vlan trunk allowed {{ lag.vlans.allowed }}
 	spanning-tree bpdu-guard
-    spanning-tree admin-edge-port
+	spanning-tree port-type admin-edge
 
 ! Membres du LAG
 {% for member in lag.members %}
@@ -18,7 +18,7 @@ interface {{ member.interface }}
     no routing
     lag {{ lag.id }}
     spanning-tree bpdu-guard
-    spanning-tree admin-edge-port
+    spanning-tree port-type admin-edge
 {% endfor %}
 
 {% endfor %}

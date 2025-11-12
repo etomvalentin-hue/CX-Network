@@ -6,16 +6,21 @@ radius-server host {{ nac.server_groups[0].servers[0].host }} key {{ nac.server_
 radius-server host {{ nac.server_groups[0].servers[1].host }} key {{ nac.server_groups[0].servers[1].key }}
 
 ! Server Group
-aaa server-group "{{ nac.server_groups[0].name }}"
-   host {{ nac.server_groups[0].servers[0].host }}
-   host {{ nac.server_groups[0].servers[1].host }}
+aaa group server radius "{{ nac.server_groups[0].name }}"
+   server {{ nac.server_groups[0].servers[0].host }}
+   server {{ nac.server_groups[0].servers[1].host }}
 
-! Authentication
+
+! Clés RADIUS (à configurer séparément sur chaque serveur)
+! key {{ nac.server_groups[0].servers[0].key }}
+! key {{ nac.server_groups[0].servers[1].key }}
+
+
+! Activation 802.1X
 aaa authentication port-access dot1x default
 aaa authentication port-access mac-auth default
 
-! 802.1X Global
-dot1x system-auth-control
+
 
 ! Rôles
 role name "{{ nac.default_role }}"

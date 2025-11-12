@@ -14,7 +14,7 @@ interface {{ port }}
    spanning-tree bpdu-guard
 {% endif %}
 {% if port_group.portfast | default(true) %}
-   spanning-tree admin-edge-port
+   spanning-tree port-type admin-edge
 {% endif %}
 {% if port_group.storm_control | default(true) %}
    storm-control broadcast level 10
