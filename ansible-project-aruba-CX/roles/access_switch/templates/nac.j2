@@ -1,5 +1,6 @@
 ! ===== CONFIGURATION NAC / 802.1X =====
 
+{% if nac is defined and nac.enabled | default(false) %}
 ! Serveurs RADIUS
 {% for group in nac.server_groups %}
 aaa server-group "{{ group.name }}"
@@ -35,4 +36,7 @@ role name "{{ nac.guest_role }}"
 {% if nac.voice_role is defined %}
 role name "{{ nac.voice_role }}"
    !
+{% endif %}
+{% else %}
+! NAC non configuré pour ce switch
 {% endif %}
