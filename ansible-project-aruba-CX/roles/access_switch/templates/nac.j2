@@ -2,10 +2,9 @@
 
 {% if nac is defined and nac.enabled | default(false) %}
 ! Création du groupe de serveurs RADIUS
-aaa group server radius "mon_radius"
+aaa group server radius RADIUS_SERVERS
    server 1.1.1.1
    server 1.1.1.2
    exit
-{% else %}
-! NAC non configuré
-{% endif %}
+
+aaa authentication port-access dot1x authenticator enable
