@@ -16,9 +16,6 @@ port_security:
   storm_control: true
 
 
-
-
-
 # Configuration NAC/802.1X
 nac:
   default_profile: "DEFAULT_USER"
