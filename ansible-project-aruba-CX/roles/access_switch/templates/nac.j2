@@ -1,6 +1,6 @@
 ! ===== CONFIGURATION NAC - ÉTAPE 1: SERVEUR GROUP =====
 
-{% if nac is defined and nac.enabled | default(false) %}
+
 ! Création du groupe de serveurs RADIUS
 aaa group server radius RADIUS_SERVERS
    server 1.1.1.1
