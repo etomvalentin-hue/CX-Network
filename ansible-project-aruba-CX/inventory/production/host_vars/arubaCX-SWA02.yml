@@ -2,11 +2,11 @@
 # host vars arubaCX-SWA02 SWITCH ACCES
 # Données UNIQUES à ce switch
 hostname: "arubaCX-SWA02"
-ansible_host: 192.168.116.138 
+ansible_host: 192.168.116.135 
 role: "access"
 
 mgmt_vlan: 10
-mgmt_ip: "192.168.116.x"
+mgmt_ip: "192.168.116.135"
 mgmt_subnet: "255.255.255.0"
 gateway: "192.168.116.1"
 
@@ -50,19 +50,23 @@ access_ports:
     voice_vlan: 110
     bpdu_guard: true
     portfast: true
- 
+    storm_control: true
+    nac_enabled: true
+    nac_profile: "DEFAULT_DOT1X"
+    nac_reauthentication: true
+    nac_timeout: 300   
 
- # - range: 
- #     - "1/1/6"
- #     - "1/1/7"
- #   description: "SERVER_PORTS"
- #   type: "access"
- #   vlan: 200
- #   bpdu_guard: true
+  - range: 
+      - "1/1/6"
+      - "1/1/7"
+    description: "SERVER_PORTS"
+    type: "access"
+    vlan: 200
+    bpdu_guard: true
 
 # Configuration sécurité
 spanning_tree:
-  mode: "rstp"
+  mode: "rpvst"
   priority: 32768
 
 port_security:

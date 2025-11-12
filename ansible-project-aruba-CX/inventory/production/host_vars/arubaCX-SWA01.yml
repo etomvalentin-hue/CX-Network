@@ -51,6 +51,10 @@ access_ports:
     bpdu_guard: true
     portfast: true
     storm_control: true
+    nac_enabled: true
+    nac_profile: "DEFAULT_DOT1X"
+    nac_reauthentication: true
+    nac_timeout: 300   
 
   - range: 
       - "1/1/6"
