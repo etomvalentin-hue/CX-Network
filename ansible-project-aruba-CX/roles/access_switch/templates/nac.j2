@@ -1,35 +1,11 @@
-! ===== CONFIGURATION NAC / 802.1X =====
+! ===== CONFIGURATION NAC - ÉTAPE 1: SERVEUR GROUP =====
 
 {% if nac is defined and nac.enabled | default(false) %}
-
-! Server Group
+! Création du groupe de serveurs RADIUS
 aaa group server radius "{{ nac.server_groups[0].name }}"
    server {{ nac.server_groups[0].servers[0].host }}
    server {{ nac.server_groups[0].servers[1].host }}
-
-
-! Clés RADIUS (à configurer séparément sur chaque serveur)
-! key {{ nac.server_groups[0].servers[0].key }}
-! key {{ nac.server_groups[0].servers[1].key }}
-
-
-! Activation 802.1X
-aaa authentication port-access dot1x authenticator enable
-aaa authentication port-access mac-auth enable
-
-
-
-! Rôles
-role name "{{ nac.default_role }}"
-!
-{% if nac.guest_role is defined %}
-role name "{{ nac.guest_role }}"
-!
-{% endif %}
-{% if nac.voice_role is defined %}
-role name "{{ nac.voice_role }}"
-!
-{% endif %}
+   exit
 {% else %}
 ! NAC non configuré
 {% endif %}
