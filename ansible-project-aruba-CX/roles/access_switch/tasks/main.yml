@@ -1,7 +1,7 @@
 ---
 - name: Include Acces parameter
   include_vars:
-    file: "access.yml"
+    file: "inventory/group_vars/access.yml"
 
 - name: Generate and push base system configuration
   template:
