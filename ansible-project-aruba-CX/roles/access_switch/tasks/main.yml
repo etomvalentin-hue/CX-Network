@@ -1,4 +1,8 @@
 ---
+- name: Include Acces parameter
+  include_vars:
+    file: "access.yml"
+
 - name: Generate and push base system configuration
   template:
     src: "base_system.j2"

@@ -20,10 +20,6 @@ nac:
   enabled: true
   default_profile: "DEFAULT_USER"
 
-# Configuration spanning-tree
-spanning_tree:
-  mode: "rstp"
-  priority: 32768
 
 # Configuration NAC/802.1X
 nac:
