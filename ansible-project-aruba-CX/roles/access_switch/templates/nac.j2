@@ -1,10 +1,12 @@
-! ===== CONFIGURATION NAC - AJOUT DES SERVEURS =====
+! ===== CONFIGURATION NAC - ÉTAPE 1: SERVEUR GROUP =====
 
-! Création du groupe de serveurs RADIUS
-aaa group server radius RADIUS_SERVERS
-server 1.1.1.1
-server 1.1.1.2
+{% if nac.enabled %}
+! --- Création des groupes RADIUS ---
+{% for group in nac.server_groups %}
+aaa group server radius {{ group.name }}
+{% for srv in group.servers %}
+server {{ srv.host }} key {{ srv.key }}
+{% endfor %}
 exit
-
-! Activation 802.1X
-aaa authentication port-access dot1x authenticator enable
+{% endfor %}
+{% endif %}
