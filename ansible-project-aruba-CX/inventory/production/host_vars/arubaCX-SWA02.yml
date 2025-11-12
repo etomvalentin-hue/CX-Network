@@ -55,13 +55,7 @@ access_ports:
     nac_profile: "DEFAULT_DOT1X"
     nac_reauthentication: true
     nac_timeout: 300   
-  authentication_profiles:
-    - name: "DEFAULT_DOT1X"
-      protocol: "dot1x"
-      server_group: "RADIUS_SERVERS"
-    - name: "DEFAULT_MAC_AUTH"
-      protocol: "mac-auth"
-      server_group: "RADIUS_SERVERS"
+
       
   - range: 
       - "1/1/6"
