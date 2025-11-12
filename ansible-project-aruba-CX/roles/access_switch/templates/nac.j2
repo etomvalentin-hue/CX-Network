@@ -1,9 +1,6 @@
 ! ===== CONFIGURATION NAC / 802.1X =====
 
 {% if nac is defined and nac.enabled | default(false) %}
-! Serveurs RADIUS
-radius-server host {{ nac.server_groups[0].servers[0].host }} key {{ nac.server_groups[0].servers[0].key }}
-radius-server host {{ nac.server_groups[0].servers[1].host }} key {{ nac.server_groups[0].servers[1].key }}
 
 ! Server Group
 aaa group server radius "{{ nac.server_groups[0].name }}"
