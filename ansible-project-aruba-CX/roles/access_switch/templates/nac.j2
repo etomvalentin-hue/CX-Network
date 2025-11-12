@@ -1,7 +1,7 @@
 ! ===== CONFIGURATION NAC / 802.1X =====
-
 {% if nac is defined and nac.enabled | default(false) %}
 
+! --- Groupes de serveurs RADIUS ---
 {% for group in nac.server_groups %}
 aaa group server radius {{ group.name }}
 {% for srv in group.servers %}
@@ -9,5 +9,20 @@ server {{ srv.host }} key {{ srv.key }}
 {% endfor %}
 exit
 {% endfor %}
+
+! --- Activation de 802.1X si demandé ---
+{% if nac.authentication_protocol == "dot1x" or nac.authentication_protocol == "both" %}
+aaa authentication port-access dot1x authenticator enable
+{% endif %}
+
+! --- Activation MAC Auth si demandé ---
+{% if nac.authentication_protocol == "mac-auth" or nac.authentication_protocol == "both" %}
+aaa authentication port-access mac-auth enable
+{% endif %}
+
+! --- (Optionnel) Définir le profil par défaut ---
+{% if nac.default_role is defined %}
+aaa authorization user-role default-role {{ nac.default_role }}
+{% endif %}
 
 {% endif %}
