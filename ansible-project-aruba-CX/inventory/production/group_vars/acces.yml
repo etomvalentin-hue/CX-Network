@@ -15,14 +15,13 @@ port_security:
   portfast: true
   storm_control: true
 
-# Configuration NAC/802.1X (si applicable)
-nac:
-  enabled: true
-  default_profile: "DEFAULT_USER"
+
+
 
 
 # Configuration NAC/802.1X
 nac:
+  default_profile: "DEFAULT_USER"
   enabled: true
   authentication_protocol: "dot1x"  # dot1x, mac-auth, ou both
   default_role: "authenticated"
