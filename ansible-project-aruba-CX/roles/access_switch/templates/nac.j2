@@ -14,8 +14,8 @@ aaa group server radius "{{ nac.server_groups[0].name }}"
 
 
 ! Activation 802.1X
-aaa authentication port-access dot1x default
-aaa authentication port-access mac-auth default
+aaa authentication port-access dot1x authenticator enable
+aaa authentication port-access mac-auth enable
 
 
 
