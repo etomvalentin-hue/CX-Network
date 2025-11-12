@@ -1,7 +1,7 @@
-! ===== CONFIGURATION NAC - ÉTAPE 1: SERVEUR GROUP =====
+! ===== CONFIGURATION NAC / 802.1X =====
 
-{% if nac.enabled %}
-! --- Création des groupes RADIUS ---
+{% if nac is defined and nac.enabled | default(false) %}
+
 {% for group in nac.server_groups %}
 aaa group server radius {{ group.name }}
 {% for srv in group.servers %}
@@ -9,4 +9,5 @@ server {{ srv.host }} key {{ srv.key }}
 {% endfor %}
 exit
 {% endfor %}
+
 {% endif %}
