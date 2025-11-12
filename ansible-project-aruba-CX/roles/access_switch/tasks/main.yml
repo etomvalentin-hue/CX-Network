@@ -34,12 +34,11 @@
     src: "security.j2"
     dest: "/tmp/{{ inventory_hostname }}_security.cfg"
 
-# Une seule tâche NAC supplémentaire
 - name: Generate and push global NAC configuration
   template:
     src: "nac.j2"
     dest: "/tmp/{{ inventory_hostname }}_nac.cfg"
-  when: nac.enabled | default(false)
+  when: not nac.enabled | default(false)
 
 - name: Push all configurations to access switch
   arubanetworks.aoscx.aoscx_config:
@@ -51,4 +50,6 @@
     - uplink
     - access_ports
     - static_ports
+    - nac
     - security
+    
