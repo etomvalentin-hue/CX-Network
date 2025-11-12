@@ -8,7 +8,7 @@ interface {{ port }}
    no routing
    vlan access {{ port_group.vlan }}
 {% if port_group.voice_vlan is defined %}
-   voice-vlan {{ port_group.voice_vlan }}
+   vlan voice {{ port_group.voice_vlan }}
 {% endif %}
 {% if port_group.bpdu_guard | default(true) %}
    spanning-tree bpdu-guard
@@ -18,8 +18,11 @@ interface {{ port }}
 {% endif %}
 {% if port_group.storm_control | default(true) %}
    storm-control broadcast level 10
-   storm-control multicast level 10
+   storm-control multicast level 10  
    storm-control unknown-unicast level 10
+{% endif %}
+{% if port_group.nac_enabled | default(false) and nac.enabled | default(false) %}
+   ! Configuration NAC (à configurer via authentication-profile)
 {% endif %}
 !
 {% endfor %}
