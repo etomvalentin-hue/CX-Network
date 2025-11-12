@@ -2,41 +2,32 @@
 
 {% if nac is defined and nac.enabled | default(false) %}
 ! Serveurs RADIUS
-{% for group in nac.server_groups %}
-aaa server-group "{{ group.name }}"
-{% for server in group.servers %}
-   host {{ server.host }} key {{ server.key }}
-{% endfor %}
-!
-{% endfor %}
+radius-server host {{ nac.server_groups[0].servers[0].host }} key {{ nac.server_groups[0].servers[0].key }}
+radius-server host {{ nac.server_groups[0].servers[1].host }} key {{ nac.server_groups[0].servers[1].key }}
 
-! Profils d'authentification
-{% for profile in nac.authentication_profiles %}
-authentication-profile "{{ profile.name }}"
-   method {{ profile.protocol }} server-group "{{ profile.server_group }}"
-   !
-{% endfor %}
+! Server Group
+aaa server-group "{{ nac.server_groups[0].name }}"
+   host {{ nac.server_groups[0].servers[0].host }}
+   host {{ nac.server_groups[0].servers[1].host }}
 
-! Configuration globale 802.1X
-dot1x
-   system-auth-control
-   !
+! Authentication
+aaa authentication port-access dot1x default
+aaa authentication port-access mac-auth default
 
-! Rôles et politiques
-{% if nac.default_role is defined %}
+! 802.1X Global
+dot1x system-auth-control
+
+! Rôles
 role name "{{ nac.default_role }}"
-   !
-{% endif %}
-
+!
 {% if nac.guest_role is defined %}
 role name "{{ nac.guest_role }}"
-   !
+!
 {% endif %}
-
 {% if nac.voice_role is defined %}
 role name "{{ nac.voice_role }}"
-   !
+!
 {% endif %}
 {% else %}
-! NAC non configuré pour ce switch
+! NAC non configuré
 {% endif %}

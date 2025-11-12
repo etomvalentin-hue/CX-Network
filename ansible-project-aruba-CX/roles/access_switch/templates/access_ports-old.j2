@@ -8,7 +8,7 @@ interface {{ port }}
    no routing
    vlan access {{ port_group.vlan }}
 {% if port_group.voice_vlan is defined %}
-   voice-vlan {{ port_group.voice_vlan }}    {# ← Essayez cette syntaxe #}
+   voice-vlan {{ port_group.voice_vlan }}
 {% endif %}
 {% if port_group.bpdu_guard | default(true) %}
    spanning-tree bpdu-guard
@@ -20,6 +20,20 @@ interface {{ port }}
    storm-control broadcast
    storm-control multicast  
    storm-control unknown-unicast
+{% endif %}
+{% if port_group.nac_enabled | default(false) and nac.enabled | default(false) %}
+   ! Configuration NAC
+   authentication
+      method {{ port_group.nac_profile.split('_')[-1].lower() }}
+      {{ port_group.nac_profile.split('_')[-1].lower() }}
+         reauthentication {{ "enable" if port_group.nac_reauthentication | default(true) else "disable" }}
+         timeout {{ port_group.nac_timeout | default(300) }}
+         !
+      !
+   authentication-profile "{{ port_group.nac_profile }}"
+   {% if port_group.voice_vlan is defined %}
+   authentication voice-vlan {{ port_group.voice_vlan }}
+   {% endif %}
 {% endif %}
 !
 {% endfor %}
