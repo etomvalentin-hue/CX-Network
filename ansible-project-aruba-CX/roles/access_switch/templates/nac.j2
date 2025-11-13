@@ -17,19 +17,9 @@ aaa authentication port-access mac-auth auth-method pap
 {% if radius is defined and radius.groups is defined %} 
 {% for group in radius.groups %}                                      
 aaa authentication port-access dot1x authenticator radius server-group {{ group.name }}
-aaa authentication port-access mac-auth radius server-group "{{ group.name }}"
+aaa authentication port-access mac-auth radius server-group {{ group.name }}
 {% endfor %}
 {% endif %}
-
-
-! Configuration du reauthentication et timeout
-{% for profile in nac.authentication_profiles %}
-{% if profile.protocol == "dot1x" and profile.reauthentication %}
-aaa authentication port-access dot1x authenticator reauthentication enable
-aaa authentication port-access dot1x authenticator quiet-period 0
-aaa authentication port-access dot1x authenticator tx-period {{ profile.timeout }}
-{% endif %}
-{% endfor %}
 
 
 
