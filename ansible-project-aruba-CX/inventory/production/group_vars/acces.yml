@@ -5,6 +5,12 @@ mgmt_vlan: 10
 mgmt_subnet: "255.255.255.0"
 gateway: "192.168.1.1"
 
+# Configuration sécurité
+spanning_tree:
+  mode: "rpvst"
+  priority: 12
+
+
 # Standards de sécurité pour ports d'accès
 port_security:
   bpdu_guard: true
