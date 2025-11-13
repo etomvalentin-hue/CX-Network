@@ -1,18 +1,17 @@
 ! ===== CONFIGURATION NAC / 802.1X =====
 ! Généré automatiquement par Ansible
 
-!{% if nac.enabled == true %}
+{% if nac.enabled %}
 
 ! Activation globale 802.1X et MAC Authentication
 aaa authentication port-access dot1x authenticator enable
 aaa authentication port-access mac-auth enable
 
 ! Configuration des méthodes d'authentification
-aaa authentication port-access dot1x authenticator auth-method eap-radius
+aaa authentication port-access dot1x authenticator auth-method  eap-radius
 aaa authentication port-access dot1x authenticator radius
 
-aaa authentication port-access mac-auth auth-method chap
-aaa authentication port-access mac-auth radius
+aaa authentication port-access mac-auth auth-method pap
 
 ! Configuration des groupes RADIUS
 aaa authentication port-access dot1x authenticator radius server-group "{{ nac.authentication_profiles[0].server_group }}"
@@ -57,4 +56,5 @@ logging level dot1x 6
 
 {% else %}
 ! NAC désactivé - Aucune configuration appliquée
-!{% endif %}
+{% endif %}
+
