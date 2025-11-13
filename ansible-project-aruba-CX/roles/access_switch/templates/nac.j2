@@ -14,9 +14,11 @@ aaa authentication port-access dot1x authenticator radius
 aaa authentication port-access mac-auth auth-method pap
 
 ! Configuration des groupes RADIUS  
-{% if radius is defined and radius.groups is defined %}                                       
+{% if radius is defined and radius.groups is defined %} 
+{% for group in radius.groups %}                                      
 aaa authentication port-access dot1x authenticator radius server-group "{{ group.name }}"
 aaa authentication port-access mac-auth radius server-group "{{ group.name }}"
+{% endfor %}
 {% endif %}
 
 
