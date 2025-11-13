@@ -67,7 +67,7 @@ access_ports:
 # Configuration sécurité
 spanning_tree:
   mode: "rpvst"
-  priority: 32768
+  priority: 12
 
 port_security:
   storm_control: true
