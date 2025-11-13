@@ -1,13 +1,9 @@
----
 # Acces.yaml
 # Paramètres communs
 role: "access"
 mgmt_vlan: 10
-
-#mgmt_ip: "{{ ansible_host }}"  # Utilise l'IP de connexion
 mgmt_subnet: "255.255.255.0"
 gateway: "192.168.1.1"
-
 
 # Standards de sécurité pour ports d'accès
 port_security:
@@ -15,26 +11,47 @@ port_security:
   portfast: true
   storm_control: true
 
-
-# Configuration NAC/802.1X
-nac:
-  default_profile: "DEFAULT_USER"
-  enabled: true
-  authentication_protocol: "dot1x"  # dot1x, mac-auth, ou both
-  default_role: "authenticated"
-  guest_role: "guest"
-  voice_role: "voice"
-  server_groups:
+# ===== CONFIGURATION SERVEURS RADIUS =====
+radius:
+  key_default: "{{ radius_key }}"
+  timeout: 5
+  retransmit: 3
+  groups:
     - name: "RADIUS_SERVERS"
+      description: "Serveurs RADIUS principaux"
       servers:
         - host: "1.1.1.1"
           key: "{{ radius_key }}"
-        - host: "1.1.1.2" 
+          auth_port: 1812
+          acct_port: 1813
+        - host: "1.1.1.2"
           key: "{{ radius_key }}"
+          auth_port: 1812
+          acct_port: 1813
+
+# ===== CONFIGURATION NAC/802.1X =====
+nac:
+  enabled: true
+  authentication_protocol: "dot1x"
+  default_role: "authenticated"
+  guest_role: "guest"
+  voice_role: "voice"
+  reauth_timer: 300
+  auth_fail_vlan: 99
+  guest_vlan: 50
+  
+  # Profils d'authentification
   authentication_profiles:
     - name: "DEFAULT_DOT1X"
       protocol: "dot1x"
       server_group: "RADIUS_SERVERS"
+      reauthentication: true
+      timeout: 300
     - name: "DEFAULT_MAC_AUTH"
       protocol: "mac-auth"
       server_group: "RADIUS_SERVERS"
+      reauthentication: false
+
+  # Politiques par défaut
+  default_dot1x_profile: "DEFAULT_DOT1X"
+  default_mac_auth_profile: "DEFAULT_MAC_AUTH"

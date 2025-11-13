@@ -1,7 +1,57 @@
 ! ===== CONFIGURATION NAC / 802.1X =====
-aaa group server radius RADIUS_SERVERS
+! Généré automatiquement par Ansible
 
-! Ajout des serveurs (syntaxe correcte Aruba CX)
-server 1.1.1.1
-server 1.1.1.2
-exit
+! Profils d'authentification
+{% for profile in nac.authentication_profiles %}
+authentication-profile "{{ profile.name }}"
+   method {{ profile.protocol }} server-group "{{ profile.server_group }}"
+   {% if profile.reauthentication is defined %}
+   reauthentication {{ "enable" if profile.reauthentication else "disable" }}
+   {% endif %}
+   {% if profile.timeout is defined %}
+   timeout {{ profile.timeout }}
+   {% endif %}
+   !
+{% endfor %}
+
+! Configuration globale 802.1X
+dot1x
+   system-auth-control
+   !
+
+! VLANs spéciaux NAC
+{% if nac.auth_fail_vlan is defined %}
+vlan {{ nac.auth_fail_vlan }}
+   name "AUTH_FAIL_VLAN"
+   !
+{% endif %}
+
+{% if nac.guest_vlan is defined %}
+vlan {{ nac.guest_vlan }}
+   name "GUEST_VLAN"
+   !
+{% endif %}
+
+! Rôles d'autorisation
+{% if nac.default_role is defined %}
+role name "{{ nac.default_role }}"
+   !
+{% endif %}
+
+{% if nac.guest_role is defined %}
+role name "{{ nac.guest_role }}"
+   !
+{% endif %}
+
+{% if nac.voice_role is defined %}
+role name "{{ nac.voice_role }}"
+   !
+{% endif %}
+
+! Politiques d'authentification par défaut
+aaa authentication dot1x default authentication-profile "{{ nac.default_dot1x_profile }}"
+aaa authentication mac-auth default authentication-profile "{{ nac.default_mac_auth_profile }}"
+
+! Logging pour troubleshooting
+logging level aaa 6
+logging level dot1x 6

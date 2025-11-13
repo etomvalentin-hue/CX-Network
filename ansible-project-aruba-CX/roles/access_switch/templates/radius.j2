@@ -1,0 +1,26 @@
+! ===== CONFIGURATION SERVEURS RADIUS =====
+! Généré automatiquement par Ansible
+
+{% for group in radius.groups %}
+! Groupe: {{ group.description }}
+{% for server in group.servers %}
+! Serveur {{ server.host }}
+radius server {{ group.name }}_{{ loop.index }}
+   host {{ server.host }} auth-port {{ server.auth_port | default(1812) }} acct-port {{ server.acct_port | default(1813) }}
+   key {{ server.key }}
+   timeout {{ radius.timeout | default(5) }}
+   retransmit {{ radius.retransmit | default(3) }}
+   !
+{% endfor %}
+{% endfor %}
+
+! ===== CONFIGURATION GROUPES DE SERVEURS RADIUS =====
+
+{% for group in radius.groups %}
+aaa server-group "{{ group.name }}"
+   type radius
+{% for server in group.servers %}
+   server {{ group.name }}_{{ loop.index }}
+{% endfor %}
+   !
+{% endfor %}
