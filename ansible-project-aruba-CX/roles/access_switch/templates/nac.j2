@@ -14,8 +14,8 @@ aaa authentication port-access dot1x authenticator radius
 aaa authentication port-access mac-auth auth-method pap
 
 ! Configuration des groupes RADIUS                                         
-aaa authentication port-access dot1x authenticator radius server-group "{{ radius.groups.name }}"
-aaa authentication port-access mac-auth radius server-group "{{ radius.groups.name }}"
+aaa authentication port-access dot1x authenticator radius server-group "{{ radius.groups[0].name }}"
+aaa authentication port-access mac-auth radius server-group "{{ radius.groups[0].name }}"
 
 ! Configuration du reauthentication et timeout
 {% for profile in nac.authentication_profiles %}
