@@ -10,6 +10,12 @@ mgmt_ip: "192.168.116.135"
 mgmt_subnet: "255.255.255.0"
 gateway: "192.168.116.1"
 
+# Configuration sécurité
+spanning_tree:
+  mode: "rpvst"
+  priority: 12
+
+
 # Port LAG vers Distribution (L2)
 lags_Uplink:
   - id: 10

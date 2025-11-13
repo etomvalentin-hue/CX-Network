@@ -5,11 +5,6 @@ mgmt_vlan: 10
 mgmt_subnet: "255.255.255.0"
 gateway: "192.168.1.1"
 
-# Configuration sécurité
-spanning_tree:
-  mode: "rpvst"
-  priority: 12
-
 
 # Standards de sécurité pour ports d'accès
 port_security:
@@ -24,15 +19,14 @@ radius:
   retransmit: 3
   groups:
     - name: "RADIUS_SERVERS"
-      description: "Serveurs RADIUS principaux"
       servers:
         - host: "1.1.1.1"
           key: "{{ radius_key }}"
-          auth_port: 1812
+          port: 1812
           acct_port: 1813
         - host: "1.1.1.2"
           key: "{{ radius_key }}"
-          auth_port: 1812
+          port: 1812
           acct_port: 1813
 
 # ===== CONFIGURATION NAC/802.1X =====
