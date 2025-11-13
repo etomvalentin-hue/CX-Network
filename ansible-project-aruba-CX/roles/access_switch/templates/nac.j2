@@ -1,7 +1,7 @@
 ! ===== CONFIGURATION NAC / 802.1X =====
 ! Généré automatiquement par Ansible
 
-{% if nac.enabled %}
+{% if nac.enabled == true %}
 
 ! Activation globale 802.1X et MAC Authentication
 aaa authentication port-access dot1x authenticator enable
