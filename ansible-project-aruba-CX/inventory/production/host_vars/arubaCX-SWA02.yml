@@ -72,3 +72,21 @@ spanning_tree:
 port_security:
   storm_control: true
   bpdu_guard: true
+
+# ===== CONFIGURATION SERVEURS RADIUS =====
+radius:
+  key_default: "{{ radius_key }}"
+  timeout: 5
+  retransmit: 3
+  groups:
+    - name: "RADIUS_SERVERS"
+      description: "Serveurs RADIUS principaux"
+      servers:
+        - host: "1.1.1.1"
+          key: "{{ radius_key }}"
+          auth_port: 1812
+          acct_port: 1813
+        - host: "1.1.1.2"
+          key: "{{ radius_key }}"
+          auth_port: 1812
+          acct_port: 1813
