@@ -1,57 +1,60 @@
 ! ===== CONFIGURATION NAC / 802.1X =====
 ! Généré automatiquement par Ansible
 
-! Profils d'authentification
+{% if nac.enabled %}
+
+! Activation globale 802.1X et MAC Authentication
+aaa authentication port-access dot1x authenticator enable
+aaa authentication port-access mac-auth enable
+
+! Configuration des méthodes d'authentification
+aaa authentication port-access dot1x authenticator auth-method eap-radius
+aaa authentication port-access dot1x authenticator radius
+
+aaa authentication port-access mac-auth auth-method chap
+aaa authentication port-access mac-auth radius
+
+! Configuration des groupes RADIUS
+aaa authentication port-access dot1x authenticator radius server-group "{{ nac.authentication_profiles[0].server_group }}"
+aaa authentication port-access mac-auth radius server-group "{{ nac.authentication_profiles[1].server_group }}"
+
+! Configuration du reauthentication et timeout
 {% for profile in nac.authentication_profiles %}
-authentication-profile "{{ profile.name }}"
-   method {{ profile.protocol }} server-group "{{ profile.server_group }}"
-   {% if profile.reauthentication is defined %}
-   reauthentication {{ "enable" if profile.reauthentication else "disable" }}
-   {% endif %}
-   {% if profile.timeout is defined %}
-   timeout {{ profile.timeout }}
-   {% endif %}
-   !
+{% if profile.protocol == "dot1x" and profile.reauthentication %}
+aaa authentication port-access dot1x authenticator reauthentication enable
+aaa authentication port-access dot1x authenticator quiet-period 0
+aaa authentication port-access dot1x authenticator tx-period {{ profile.timeout }}
+{% endif %}
 {% endfor %}
 
-! Configuration globale 802.1X
-dot1x
-   system-auth-control
-   !
+
+
 
 ! VLANs spéciaux NAC
-{% if nac.auth_fail_vlan is defined %}
 vlan {{ nac.auth_fail_vlan }}
    name "AUTH_FAIL_VLAN"
-   !
-{% endif %}
-
-{% if nac.guest_vlan is defined %}
+!
 vlan {{ nac.guest_vlan }}
    name "GUEST_VLAN"
-   !
-{% endif %}
+!
 
 ! Rôles d'autorisation
-{% if nac.default_role is defined %}
 role name "{{ nac.default_role }}"
-   !
-{% endif %}
-
-{% if nac.guest_role is defined %}
+!
 role name "{{ nac.guest_role }}"
-   !
-{% endif %}
-
-{% if nac.voice_role is defined %}
+!
 role name "{{ nac.voice_role }}"
-   !
-{% endif %}
+!
 
-! Politiques d'authentification par défaut
-aaa authentication dot1x default authentication-profile "{{ nac.default_dot1x_profile }}"
-aaa authentication mac-auth default authentication-profile "{{ nac.default_mac_auth_profile }}"
+
 
 ! Logging pour troubleshooting
 logging level aaa 6
 logging level dot1x 6
+
+! Message de succès
+! Configuration NAC appliquée avec succès
+
+{% else %}
+! NAC désactivé - Aucune configuration appliquée
+{% endif %}
