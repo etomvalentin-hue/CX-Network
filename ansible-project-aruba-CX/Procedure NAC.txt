@@ -33,9 +33,11 @@ Ces configurations de base doivent être en place avant de commencer la configur
 	- aaa authorization network default group RADIUS
 
 5/ Configuration des interfaces d'accès
+	- dot1x
 	- dot1x port-control auto
 	- dot1x mac-auth-bypass
-	- dot1x
+	- dot1x mac-auth-bypass delay 5   or  no dot1x mac-auth-bypass (# Pas de MAB) or dot1x mac-auth-bypass only ( # MAB seulement)  or dot1x mac-auth-bypass dot1x  (# MAB prioritaire)
+	- dot1x timeout tx-period 7
 
 
 6/  Attibuts RADIUS importants cas ClearPass
