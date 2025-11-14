@@ -1,0 +1,56 @@
+NAC Configuration 
+
+0/ Paramètres à collecter avant la configuration NAC
+
+Ces configurations de base doivent être en place avant de commencer la configuration spécifique du NAC (802.1X, MAC Authentication, etc.).
+
+	- Adresses IP des serveurs RADIUS/ISE
+    - Clés partagées RADIUS
+    - VLAN IDs prévus pour chaque rôle
+    - Plages d'adresses IP pour chaque VLAN
+    - Certificats si utilisation de EAP-TLS
+    - Politiques d'accès par défaut
+
+1/ Configuration des VLANs
+	- VLAN d'administration
+	- VLAN pour clients non authentifiés (Guest/Voice)
+	- VLAN pour clients authentifiés
+
+2/ Services de base
+	- DNS
+	- NTP
+	
+3/ Parametres Radius  (pour l'authentification)
+
+	- Serveurs RADIUS
+	- Groupes RADIUS
+	- Configure RADIUS timer, retransmit, source-interface
+	
+4/ Configuration AAA de base MAB and 802.1X
+
+	- Authentification 802.1X : aaa authentication dot1x default group RADIUS
+	- MAC (MAB) : aaa authentication mac-auth default group RADIUS
+	- aaa authorization network default group RADIUS
+
+5/ Configuration des interfaces d'accès
+	- dot1x port-control auto
+	- dot1x mac-auth-bypass
+	- dot1x
+
+
+6/  Attibuts RADIUS importants cas ClearPass
+
+	- Attributs envoyés au ClearPass :
+
+		--> Calling-Station-ID (MAC address)
+		--> User-Name
+		--> NAS-IP-Address
+		--> NAS-Port-Type
+		--> Service-Type
+
+	- Attributs reçus de ClearPass :
+
+		--> Tunnel-Private-Group-ID (VLAN ID) - Le plus important
+		--> Filter-Id (ACL names)
+		--> Session-Timeout
+		--> Termination-Action
