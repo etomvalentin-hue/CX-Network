@@ -31,6 +31,7 @@ CX-Network/ansible-projet-aruba-CX/
 │  │     ├── distribution.yml
 │  │     ├── vault.yml # Variables chiffrées (mots de passe, clés)
 │  │     └── wan.yml
+
 │  ├── host_vars/
 │  │     ├── arubaCX-Rt1.yml
 │  │     ├── arubaCX-SWA01.yml
@@ -38,6 +39,7 @@ CX-Network/ansible-projet-aruba-CX/
 │  │     ├── arubaCX-SWD01.yml
 │  │     └── arubaCX-SWD02.yml
 │  └── hosts.yml
+
 │
 ├── roles/
 │ ├── access_switch/
@@ -49,6 +51,7 @@ CX-Network/ansible-projet-aruba-CX/
 │ │       ├── security.j2
 │ │       ├── static_ports.j2
 │ │       └── vlans.j2
+
 │ │
 │ ├── distribution_vsx/
 │ │     ├── tasks/main.yml
@@ -64,6 +67,7 @@ CX-Network/ansible-projet-aruba-CX/
 │ │         ├── vlans.j2
 │ │         ├── vsx.j2
 │ │         └── vsx_id.j2
+
 │ │
 │ └── wan_router/
 │     ├── tasks/main.yml
@@ -76,6 +80,7 @@ CX-Network/ansible-projet-aruba-CX/
 │        ├── route-maps.j2
 │        ├── vlans.j2
 │        └── wan_interfaces.j2
+
 │
 ├── playbook-deploy-access.yml
 ├── playbook-deploy-distribution.yml
