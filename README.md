@@ -23,7 +23,7 @@ Il couvre les aspects suivants :
 
 CX-Network/ansible-projet-aruba-CX/
 │
-├── inventory/ 
+├── inventory/
 │ └── production/
 │  ├── group_vars/
 │  │     ├── acces.yml
