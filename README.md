@@ -25,6 +25,7 @@ CX-Network/ansible-projet-aruba-CX/
 │
 ├── inventory/
 │ └── production/
+
 │  ├── group_vars/
 │  │     ├── acces.yml
 │  │     ├── all.yml
