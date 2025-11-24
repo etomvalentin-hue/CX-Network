@@ -19,7 +19,19 @@ interface {{ port }}
    storm-control unknown-unicast level 10
 {% endif %}
 {% if port_group.nac_enabled | default(false) and nac.enabled | default(false) %}
-   ! Configuration NAC (à configurer via authentication-profile)
+! --- NAC / 802.1X & MAC-AUTH ---
+
+   ! --- DOT1X (802.1X) ---
+   aaa authentication port-access dot1x authenticator enable
+   aaa authentication port-access dot1x authenticator reauth
+   aaa authentication port-access dot1x authenticator quiet-period 0
+   aaa authentication port-access dot1x authenticator reauth-period {{ nac.reauth_timer }}
+
+   ! --- MAC-AUTH ---
+   aaa authentication port-access mac-auth enable
+   aaa authentication port-access mac-auth reauth
+   aaa authentication port-access mac-auth quiet-period 0
+   aaa authentication port-access mac-auth reauth-period {{ nac.reauth_timer }}
 {% endif %}
 !
 {% endfor %}
