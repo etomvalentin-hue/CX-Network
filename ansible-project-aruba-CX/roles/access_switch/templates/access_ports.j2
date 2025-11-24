@@ -26,6 +26,8 @@ interface {{ port }}
    aaa authentication port-access dot1x authenticator reauth
    aaa authentication port-access dot1x authenticator quiet-period 0
    aaa authentication port-access dot1x authenticator reauth-period {{ nac.reauth_timer }}
+   aaa authentication port-access dot1x authenticator max-eapol-requests 5
+   aaa authentication port-access dot1x authenticator max-retries 2
 
    ! --- MAC-AUTH ---
    aaa authentication port-access mac-auth enable
