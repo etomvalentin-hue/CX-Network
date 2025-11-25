@@ -1,14 +1,14 @@
 ! OSPF Configuration for LAN
 router ospf {{ ospf.process_id }}
    router-id {{ ospf.router_id }}
-   {% for network in ospf.networks %}
+{% for network in ospf.networks %}
    network {{ network }} area 0.0.0.0
-   {% endfor %}
-   {% for interface in ospf.passive_interfaces %}
+{% endfor %}
+{% for interface in ospf.passive_interfaces %}
    passive-interface {{ interface }}
-   {% endfor %}
-   {% if ospf.redistribute is defined %}
-   {% for redistribute in ospf.redistribute %}
+{% endfor %}
+{% if ospf.redistribute is defined %}
+{% for redistribute in ospf.redistribute %}
    redistribute {{ redistribute.protocol }} route-map {{ redistribute.route_map }}
-   {% endfor %}
-   {% endif %}
+{% endfor %}
+{% endif %}
