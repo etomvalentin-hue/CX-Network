@@ -4,6 +4,11 @@
     src: "base_system.j2"
     dest: "/tmp/{{ inventory_hostname }}_base.cfg"
 
+- name: Generate and push RADIUS configuration
+  template:
+    src: "radius.j2"
+    dest: "/tmp/{{ inventory_hostname }}_radius.cfg"
+
 - name: Generate and push VSX configuration
   template:
     src: "vsx.j2"
@@ -55,6 +60,7 @@
     save_when: always
   loop:
     - base
+    - radius
     - vsx
     - vlans
     - prefix_lists

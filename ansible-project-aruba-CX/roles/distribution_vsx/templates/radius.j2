@@ -1,0 +1,23 @@
+
+! ===== CONFIGURATION SERVEURS RADIUS =====
+{% if radius is defined and radius.groups is defined %}
+
+! Paramètres globaux
+radius-server timeout {{ radius.timeout | default(5) }}
+radius-server retries {{ radius.retransmit | default(3) }}
+
+{% for group in radius.groups %}
+! Déclaration des serveurs RADIUS
+{% for srv in group.servers %}
+radius-server host {{ srv.host }} acct-port {{ srv.acct_port | default(1813) }} port {{ srv.port | default(1812) }}  key plaintext {{ srv.key | default(radius.key_default) }}
+{% endfor %}
+
+! Création du groupe AAA RADIUS
+aaa group server radius {{ group.name }}
+{% for srv in group.servers %}
+ server {{ srv.host }}
+{% endfor %}
+exit
+{% endfor %}
+
+{% endif %}
