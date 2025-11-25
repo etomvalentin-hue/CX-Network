@@ -46,6 +46,7 @@
     dest: "/tmp/{{ inventory_hostname }}_access_lag.cfg"
 
 - name: Generate and push BGP configuration
+  tags: bgp
   template:
     src: "bgp.j2"
     dest: "/tmp/{{ inventory_hostname }}_bgp.cfg"
