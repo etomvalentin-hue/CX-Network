@@ -116,6 +116,8 @@ route_maps:
       - sequence: 10
         action: "permit"
         match: "ip address prefix-list OSPF_TO_BGP"
+      - sequence: 20
+        action: "permit"
         set: "metric 100"
 
   - name: "BGP_TO_OSPF"

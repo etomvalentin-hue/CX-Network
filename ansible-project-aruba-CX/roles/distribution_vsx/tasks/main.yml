@@ -62,10 +62,10 @@
   loop:
     - base
     - prefix_lists
+    - acls
     - radius
     - vsx
     - vlans
-    - acls
     - route_maps
     - wan_lag
     - access_lag

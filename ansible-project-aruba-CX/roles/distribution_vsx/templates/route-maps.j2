@@ -1,18 +1,14 @@
 ! Route Maps Configuration
 {% for route_map in route_maps %}
 ! {{ route_map.name }}
-{% for s in route_map.sequences %}
-- name: "Configure route-map {{ route_map.name }} seq {{ s.sequence }}"
-  aruba.aoscx.aoscx_config:
-    parents:
-      - "route-map {{ route_map.name }} {{ s.action }} seq {{ s.sequence }}"
-    lines:
-      {% if s.match is defined %}
-      - "match {{ s.match }}"
-      {% endif %}
-      {% if s.set is defined %}
-      - "set {{ s.set }}"
-      {% endif %}
+{% for sequence in route_map.sequences %}
+route-map {{ route_map.name }} {{ sequence.action }} seq {{ sequence.sequence }}
+{% if sequence.match is defined and sequence.match != "" %}
+   match {{ sequence.match }}
+{% endif %}
+{% if sequence.set is defined and sequence.set != "" %}
+   set {{ sequence.set }}
+{% endif %}
+!
 {% endfor %}
 {% endfor %}
-
