@@ -127,7 +127,7 @@ route_maps:
         match: "ip address prefix-list BGP_TO_OSPF"          
       - sequence: 10
         action: "permit"
-        set: "metric-type 1"   
+        set: "set metric-type external type-1"   
 
   - name: "TO_WAN_arubaCX-Rt1"
     sequences:
