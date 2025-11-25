@@ -3,11 +3,11 @@
 ! {{ route_map.name }}
 {% for sequence in route_map.sequences %}
 route-map {{ route_map.name }} {{ sequence.action }} seq {{ sequence.sequence }}
-{% if sequence.match %}
-   match {{ sequence.match }}
+{% if sequence.match is defined %}
+ match {{ sequence.match }}
 {% endif %}
 {% if sequence.set is defined %}
-   set {{ sequence.set }}
+ set {{ sequence.set }}
 {% endif %}
 !
 {% endfor %}
