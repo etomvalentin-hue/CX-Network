@@ -6,7 +6,7 @@ route-map {{ route_map.name }} {{ sequence.action }} seq {{ sequence.sequence }}
 {% if sequence.match %}
    match {{ sequence.match }}
 {% endif %}
-{% if sequence.set %}
+{% if sequence.set is defined %}
    set {{ sequence.set }}
 {% endif %}
 !
