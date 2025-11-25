@@ -8,6 +8,11 @@
   template:
     src: "radius.j2"
     dest: "/tmp/{{ inventory_hostname }}_radius.cfg"
+    
+- name: Generate and push prefix-lists configuration
+  template:
+    src: "prefix-lists.j2"
+    dest: "/tmp/{{ inventory_hostname }}_prefix_lists.cfg"
 
 - name: Generate and push VSX configuration
   template:
@@ -19,10 +24,6 @@
     src: "vlans.j2"
     dest: "/tmp/{{ inventory_hostname }}_vlans.cfg"
 
-- name: Generate and push prefix-lists configuration
-  template:
-    src: "prefix-lists.j2"
-    dest: "/tmp/{{ inventory_hostname }}_prefix_lists.cfg"
 
 - name: Generate and push ACLs configuration
   template:
@@ -60,10 +61,10 @@
     save_when: always
   loop:
     - base
+    - prefix_lists
     - radius
     - vsx
     - vlans
-    - prefix_lists
     - acls
     - route_maps
     - wan_lag
