@@ -125,7 +125,7 @@ route_maps:
       - sequence: 10
         action: "permit"
         match: "ip address prefix-list BGP_TO_OSPF" "             
-       - sequence: 10
+      - sequence: 10
         action: "permit"
         set: "metric-type 1"  
 
