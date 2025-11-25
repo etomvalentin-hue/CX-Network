@@ -149,7 +149,7 @@ bgp:
       next_hop_self: true
       route_map_out: "TO_WAN_arubaCX-Rt1"
   redistribute:
-    - protoccol: "ospf" 
+    - protocol: "ospf" 
       route_map: "OSPF_TO_BGP"   
 
 # Configuration OSPF pour LAN
