@@ -1,21 +1,46 @@
 ! BGP Configuration
 {% if bgp is defined %}
 router bgp {{ bgp.as_number }}
-   router-id {{ bgp.router_id }}
-   {% if bgp.log_neighbor_changes | default(true) %}
-   log-neighbor-changes
-   {% endif %}
-   
+   bgp router-id {{ bgp.router_id }}
+   bgp log-neighbor-changes
+
    ! Networks to advertise
    {% for network in bgp.networks %}
    network {{ network }}
    {% endfor %}
-   
+
    ! Neighbors Configuration
    {% for neighbor in bgp.neighbors %}
    neighbor {{ neighbor.ip }} remote-as {{ neighbor.remote_as }}
    neighbor {{ neighbor.ip }} description "{{ neighbor.description }}"
+
+   {% if neighbor.next_hop_self is defined and neighbor.next_hop_self %}
+   address-family ipv4 unicast
+      neighbor {{ neighbor.ip }} next-hop-self
+   exit-address-family
+   {% endif %}
+
+   {% if neighbor.route_map_in is defined %}
+   address-family ipv4 unicast
+      neighbor {{ neighbor.ip }} route-map {{ neighbor.route_map_in }} in
+   exit-address-family
+   {% endif %}
+
+   {% if neighbor.route_map_out is defined %}
+   address-family ipv4 unicast
+      neighbor {{ neighbor.ip }} route-map {{ neighbor.route_map_out }} out
+   exit-address-family
+   {% endif %}
    {% endfor %}
+
+   ! Redistribution
+   {% if bgp.redistribute is defined %}
+   address-family ipv4 unicast
+   {% for redist in bgp.redistribute %}
+      redistribute {{ redist.protocol }} route-map {{ redist.route_map }}
+   {% endfor %}
+   exit-address-family
+   {% endif %}
 {% else %}
 ! BGP configuration skipped - bgp not defined
 {% endif %}
