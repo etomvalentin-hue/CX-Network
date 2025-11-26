@@ -3,7 +3,7 @@
 Ce projet a pour objectif d'automatiser la configuration d'une infrastructure réseau basée sur des switches **Aruba CX**.  
 Il couvre les aspects suivants :
 
-- **Intégration NAC** (MAB)
+- **Intégration NAC** MAB et dot1x
 - **Configuration MLAG** (VSX entre deux switches Aruba CX)
 - **Routage BGP et OSPF** 
 - **Configuration des interfaces** (Access, Trunk, Uplink, Management)
